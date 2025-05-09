@@ -1,41 +1,16 @@
-import { Tabs } from "expo-router";
-import { Platform, useColorScheme, StyleSheet } from "react-native";
-import { BlurView } from "expo-blur";
-import { SymbolView } from "expo-symbols";
-import TabBar from "@/components/ui/tab-bar";
+import { View, Text } from 'react-native'
+import React from 'react'
+import { Stack } from 'expo-router'
 
-export default function TabLayout() {
-
-    
+const RootLayout = () => {
   return (
-    <Tabs
-    screenOptions={{headerShown: false}}
-    tabBar={props=> <TabBar {...props} />}
-    >
-       <Tabs.Screen
-            name="(tabs)/home"
-            options={{
-                title: "Home"
-            }}
-        />
-        <Tabs.Screen
-            name="(tabs)/workshop"
-            options={{
-                title: "Workshop"
-            }}
-        />
-        <Tabs.Screen
-            name="(tabs)/history"
-            options={{
-                title: "History"
-            }}
-        />
-        <Tabs.Screen
-            name="(tabs)/profile"
-            options={{
-                title: "Profile"
-            }}
-        />
-    </Tabs>
-  );
+    <Stack >
+    <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+    <Stack.Screen name="(details)/(services)/[id]" options={{ headerShown: false }} />
+    <Stack.Screen name="(details)/(rent)/[id]" options={{ headerShown: false }} />
+    <Stack.Screen name="(details)/(selling)/[id]" options={{ headerShown: false }} />
+    </Stack>
+  )
 }
+
+export default RootLayout

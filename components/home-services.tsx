@@ -10,6 +10,7 @@ import {
 } from "@/util/vehicle-options";
 import { FadeIn } from "./utils.tsx/fade-in";
 import { useBottomTabOverflow } from "./utils.tsx/body-scroll-view";
+import { router } from "expo-router";
 
 interface HomeServicesProps {
   activeTab: string;
@@ -19,11 +20,16 @@ const HomeServices = ({ activeTab }: HomeServicesProps) => {
   const selectedData = vehicleOptionsDataMap[activeTab] || [];
   const selectedRenderItem = vehicleOptionsRenderMap[activeTab] || (() => null);
   const paddingBottom = useBottomTabOverflow();
-  const numColumns = activeTab === "Rent" ? 1 : 2;
+  const numColumns = activeTab === "rent" ? 1 : 2;
+
+  const detailsHandler = (itemId: string, itemName: string, type: string) => {
+    router.push(`/(root)/(details)/(${type})/${itemId}?name=${itemName}`);
+  };
 
   return (
     <View className="gap-y-4 pt-8 px-4">
       <Text className="text-2xl font-bold capitalize">Vehicle {activeTab}</Text>
+
       <FadeIn>
         <FlatList
           key={numColumns}
@@ -36,11 +42,17 @@ const HomeServices = ({ activeTab }: HomeServicesProps) => {
             numColumns > 1
               ? {
                   justifyContent: "space-between",
-                  marginBottom: 12,
+                  marginBottom: 20,
                 }
               : undefined
           }
-          renderItem={selectedRenderItem}
+          renderItem={({ item }) =>
+            selectedRenderItem({
+              item,
+              type: activeTab,
+              onPress: detailsHandler,
+            })
+          }
           ItemSeparatorComponent={
             numColumns === 1 ? () => <View style={{ height: 20 }} /> : undefined
           }

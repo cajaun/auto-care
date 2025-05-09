@@ -17,9 +17,8 @@ interface TabBarButtonProps {
   activeSymbol: SFSymbol;  
 }
 
-const MIN_WIDTH = 50;
-const MAX_WIDTH = 144;
-
+const MIN_WIDTH = 60;
+const MAX_WIDTH = 120;
 const INNER_BOX_PADDING_LEFT = 13;
 const SYMBOL_SIZE = 25;
 const TEXT_PADDING = 6;

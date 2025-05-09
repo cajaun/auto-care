@@ -1,19 +1,22 @@
 export const vehicleRentals = [
   {
-    name: "Car Rent Service",
-    image: require("@/assets/images/rentals/car-rent-service.png"),
+    id: 1,
+    name: "Car Rent",
+    icon: "car.side.fill",
 
 
   },
 
   {
-    name: "Bicycle Service",
-    image: require("@/assets/images/rentals/bicycle-rent-service.png"),
+    id: 2,
+    name: "Bicycle",
+    icon: "figure.outdoor.cycle",
 
   },
   {
+    id: 3,
     name: "Motorcycle",
-    image: require("@/assets/images/rentals/bike-rent-service.png"),
+    icon: "motorcycle.fill",
 
   }
 ];

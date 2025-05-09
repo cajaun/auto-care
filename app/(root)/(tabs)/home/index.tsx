@@ -6,6 +6,7 @@ import { auth } from "@/FirebaseConfig";
 
 import HomeHeader from "@/components/home-header";
 import HomeServices from "@/components/home-services";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const HomeScreen = () => {
   const handleSignOut = async () => {
@@ -16,11 +17,15 @@ const HomeScreen = () => {
       console.error("Error signing out: ", error);
     }
   };
-  const [activeTab, setActiveTab] = useState("Services");
+  const [activeTab, setActiveTab] = useState("services");
 
   return (
     <ScrollView className=" " style={{ width: "100%" }}>
+
+
+     
       <HomeHeader activeTab={activeTab} setActiveTab={setActiveTab} />
+
 
       <HomeServices activeTab={activeTab} />
     </ScrollView>

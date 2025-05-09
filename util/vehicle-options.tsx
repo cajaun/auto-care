@@ -6,13 +6,15 @@ import TouchableBounce from "@/components/ui/touchable-bounce";
 import { vehicleServices } from "./vehicle-services";
 import { vehicleRentals } from "./vehicle-rentals";
 import { vehicleSales } from "./vehicle-sales";
+import { router } from "expo-router";
+
 
 export const vehicleOptionsRenderMap: Record<
   string,
-  ({ item }: { item: any }) => JSX.Element
+  ({ item, type, onPress }: { item: any; type: string; onPress: (itemId: string, itemName: string, type: string) => void }) => JSX.Element
 > = {
-  Services: ({ item }) => (
-    <TouchableBounce style={{ width: "48%" }}>
+  services: ({ item, type, onPress }) => (
+    <TouchableBounce style={{ width: "48%" }} onPress={() => onPress(item.id, item.name, type)}>
       <View
         className="rounded-lg overflow-hidden"
         style={{
@@ -51,35 +53,40 @@ export const vehicleOptionsRenderMap: Record<
     </TouchableBounce>
   ),
 
-  Rent: ({ item }) => (
-    <TouchableBounce style={{ width: "100%", height: 94 }} className="">
+  rent: ({ item, type, onPress })  => (
+    <TouchableBounce style={{ width: "100%", height: 94 }} onPress={() => onPress(item.id, item.name, type)} >
       <View
-        className="bg-white flex-row  items-center  rounded-2xl px-4 "
-        style={{ height: "100%", width: "100%" }}
+        className="bg-white flex-row  justify-between items-center  rounded-2xl "
+        style={{ height: "100%", width: "100%", paddingHorizontal: 28 }}
       >
-        <View className="flex-row px-4 items-center justify-center gap-x-4">
-          <View style={{ width: 90, height: 60 }}>
-            <Image
-              className=""
-              source={item.image}
-              style={{ width: "100%", height: "75%", marginVertical: "auto" }}
-              contentFit="contain"
-            />
-          </View>
+        <View className = "flex-row" style={{gap: 28}}>
 
-          <View className="gap-y-2">
-            <Text className="text-2xl font-semibold">Car Rent Service</Text>
+      
+        <View>
+          <SymbolView name={item.icon} tintColor="#000" size={60} />
+        </View>
 
-            <Text>Available</Text>
-          </View>
+        <View className="  gap-y-2">
+          <Text className="text-2xl font-semibold">{item.name} Service</Text>
+
+          <Text className = "" style={{color: "#2AB749", fontWeight: "semibold"}}>Available</Text>
+        </View>
+        </View>
+
+        <View style={{ width: 30, height: 30 }}>
+          <Image
+            source={require("@/assets/images/rentals/rent-button.png")}
+            style={{ width: "100%", height: "100%" }}
+            contentFit="contain"
+          />
         </View>
       </View>
     </TouchableBounce>
   ),
 
-  Selling: ({ item }) => (
-    <TouchableBounce style={{ width: "48%" }}>
-      <View className="bg-white p-2 rounded-xl border border-gray-200">
+  selling: ({ item, type, onPress })  => (
+    <TouchableBounce style={{ width: "48%" }} onPress={() => onPress(item.id, item.name, type)}>
+      <View className="bg-white p-2 rounded-xl ">
         <View style={{ width: "100%", height: 120 }}>
           <Image
             className=""
@@ -88,22 +95,25 @@ export const vehicleOptionsRenderMap: Record<
             contentFit="contain"
           />
         </View>
-        <View className = "px-2">
-
-      
-        <Text className="text-xl font-semibold mt-2">{item.name}</Text>
-        <View className="flex-row justify-between items-center ">
-          <Text className="mt-2 font-bold text-accent text-2xl">$240</Text>
-
-          <View>
-            <SymbolView
-              name="plus.circle.fill"
-              type="monochrome"
-              tintColor="#FF4040"
-              size={25}
-            />
+        <View className="px-2">
+          <View className="flex-row items-center">
+            <SymbolView name="star.fill" tintColor="#FFB23F" size={20} />
+            <Text className="ml-1 mt-1 text-dark-50">4.9</Text>
           </View>
-        </View>
+
+          <Text className="text-xl font-semibold mt-2">{item.name}</Text>
+          <View className="flex-row justify-between items-center ">
+            <Text className="mt-2 font-bold text-accent text-2xl">$240</Text>
+
+            <View>
+              <SymbolView
+                name="plus.circle.fill"
+                type="monochrome"
+                tintColor="#FF4040"
+                size={25}
+              />
+            </View>
+          </View>
         </View>
       </View>
     </TouchableBounce>
@@ -111,7 +121,7 @@ export const vehicleOptionsRenderMap: Record<
 };
 
 export const vehicleOptionsDataMap: Record<string, any[]> = {
-  Services: vehicleServices,
-  Rent: vehicleRentals,
-  Selling: vehicleSales,
+  services: vehicleServices,
+  rent: vehicleRentals,
+  selling: vehicleSales,
 };
