@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import { useAuth } from "@/context/auth-context";
-import { ActivityIndicator, View } from "react-native";
+import { View } from "react-native";
 import { router } from "expo-router";
+import { Image } from "expo-image"; 
 
 const SplashScreen = () => {
   const { user, loading } = useAuth(); 
@@ -18,8 +19,19 @@ const SplashScreen = () => {
 
   if (loading) {
     return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <ActivityIndicator size="large" color="blue" />
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "#FF4040",
+        }}
+      >
+        <Image
+          source={require("@/assets/images/logo.png")} 
+          style={{ width: 150, height: 150 }}
+          contentFit="contain"
+        />
       </View>
     );
   }

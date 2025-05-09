@@ -1,11 +1,12 @@
 import { View, Text } from 'react-native'
 import React from 'react'
+import { Stack } from 'expo-router'
 
 const HistoryLayout = () => {
   return (
-    <View>
-      <Text>HistoryLayout</Text>
-    </View>
+<Stack>
+  <Stack.Screen name = "index" options={{headerShown: false}}/>
+</Stack>
   )
 }
 

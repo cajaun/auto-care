@@ -5,13 +5,37 @@ import { SymbolView } from "expo-symbols";
 import TabBar from "@/components/ui/tab-bar";
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
+
+    
   return (
     <Tabs
     screenOptions={{headerShown: false}}
     tabBar={props=> <TabBar {...props} />}
     >
-     
+       <Tabs.Screen
+            name="(tabs)/home"
+            options={{
+                title: "Home"
+            }}
+        />
+        <Tabs.Screen
+            name="(tabs)/workshop"
+            options={{
+                title: "Workshop"
+            }}
+        />
+        <Tabs.Screen
+            name="(tabs)/history"
+            options={{
+                title: "History"
+            }}
+        />
+        <Tabs.Screen
+            name="(tabs)/profile"
+            options={{
+                title: "Profile"
+            }}
+        />
     </Tabs>
   );
 }

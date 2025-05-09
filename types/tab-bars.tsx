@@ -1,6 +1,7 @@
 import { SFSymbol } from "expo-symbols";
 
-export type Configs = {
+export type TabBar
+ = {
   label: string,
   defaultSymbol: SFSymbol,
   activeSymbol: SFSymbol,
