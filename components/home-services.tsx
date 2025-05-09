@@ -1,83 +1,54 @@
-import { View, Text, FlatList } from 'react-native'
-import React from 'react'
-import TouchableBounce from './ui/touchable-bounce'
-import { Image } from 'expo-image'
-import { SymbolView } from 'expo-symbols'
-import { vehicleServices } from '@/util/vehicle-services'
+import { View, Text, FlatList } from "react-native";
+import React from "react";
+import TouchableBounce from "./ui/touchable-bounce";
+import { Image } from "expo-image";
+import { SymbolView } from "expo-symbols";
+
+import {
+  vehicleOptionsDataMap,
+  vehicleOptionsRenderMap,
+} from "@/util/vehicle-options";
+import { FadeIn } from "./utils.tsx/fade-in";
+import { useBottomTabOverflow } from "./utils.tsx/body-scroll-view";
 
 interface HomeServicesProps {
   activeTab: string;
 }
 
 const HomeServices = ({ activeTab }: HomeServicesProps) => {
-
-  const filteredServices = vehicleServices.filter(service => service.category === activeTab)
+  const selectedData = vehicleOptionsDataMap[activeTab] || [];
+  const selectedRenderItem = vehicleOptionsRenderMap[activeTab] || (() => null);
+  const paddingBottom = useBottomTabOverflow();
+  const numColumns = activeTab === "Rent" ? 1 : 2;
 
   return (
-    <View className="gap-y-4 pt-8 px-4 ">
-    <View>
-      <Text className="text-2xl font-bold">Vehicle Services</Text>
+    <View className="gap-y-4 pt-8 px-4">
+      <Text className="text-2xl font-bold capitalize">Vehicle {activeTab}</Text>
+      <FadeIn>
+        <FlatList
+          key={numColumns}
+          scrollEnabled={false}
+          contentInsetAdjustmentBehavior="automatic"
+          data={selectedData}
+          keyExtractor={(item, index) => index.toString()}
+          numColumns={numColumns}
+          columnWrapperStyle={
+            numColumns > 1
+              ? {
+                  justifyContent: "space-between",
+                  marginBottom: 12,
+                }
+              : undefined
+          }
+          renderItem={selectedRenderItem}
+          ItemSeparatorComponent={
+            numColumns === 1 ? () => <View style={{ height: 20 }} /> : undefined
+          }
+          contentContainerStyle={{ paddingBottom: paddingBottom }}
+        />
+      </FadeIn>
     </View>
+  );
+};
 
-    <FlatList
-      scrollEnabled={false}
-      contentInsetAdjustmentBehavior="automatic"
-      data={filteredServices}
-      keyExtractor={(item, index) => index.toString()}
-      numColumns={2}
-      columnWrapperStyle={{
-        justifyContent: "space-between",
-        marginBottom: 12,
-      }}
-      renderItem={({ item }) => (
-        <TouchableBounce style={{ width: "48%" }}>
-          <View
-            key={item.name}
-            className="rounded-lg overflow-hidden"
-            style={{
-              width: "100%",
-              height: 120,
-              marginBottom: 10,
-              position: "relative",
-            }}
-          >
-            <Image
-              source={item.image}
-              style={{ width: "100%", height: 120, borderRadius: 12 }}
-              contentFit="cover"
-            />
-
-            <View
-              className="absolute bottom-4 "
-              style={{
-                width: 100,
-                height: 30,
-              }}
-            >
-              <Image
-                source={item.tag}
-                style={{ width: "100%", height: "100%" }}
-                contentFit="contain"
-              />
-            </View>
-          </View>
-
-          <View className="gap-y-1">
-            <View>
-              <Text className="text-lg font-semibold">{item.name}</Text>
-            </View>
-
-            <View className="flex-row items-center gap-x-2">
-              <SymbolView name="headset" tintColor="#A3A6AC" />
-
-              <Text className="text-dark-50">24/7</Text>
-            </View>
-          </View>
-        </TouchableBounce>
-      )}
-    />
-  </View>
-  )
-}
-
-export default HomeServices
+export default HomeServices;

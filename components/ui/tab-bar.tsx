@@ -23,10 +23,8 @@ export function useTopTabOverflow() {
 
 const TabBar: React.FC<BottomTabBarProps> = ({
   state,
-  descriptors,
   navigation,
 }) => {
-  const [activeIndex, setActiveIndex] = useState(0);
 
   return (
     <View
@@ -67,12 +65,7 @@ const TabBar: React.FC<BottomTabBarProps> = ({
             }
           };
 
-          const onLongPress = () => {
-            navigation.emit({
-              type: "tabLongPress",
-              target: state.routes[index].key,
-            });
-          };
+
 
           return (
             <TabBarButton
@@ -91,8 +84,6 @@ const TabBar: React.FC<BottomTabBarProps> = ({
   );
 };
 
-const styles = StyleSheet.create({
-  buttonContainer: {},
-});
+
 
 export default TabBar;

@@ -16,8 +16,8 @@ interface HomeHeaderProps {
 
 const HomeHeader = ({ activeTab, setActiveTab }: HomeHeaderProps) => {
   return (
-    <SafeAreaView className="bg-white rounded-es-[36px] rounded-ee-[36px] px-4 gap-y-5">
-    <View className="flex-row justify-between items-center ">
+    <SafeAreaView className="bg-white rounded-es-[36px] rounded-ee-[36px]  gap-y-5">
+    <View className="flex-row justify-between items-center px-4 ">
       <View className="flex-row justify-center items-center gap-x-4">
         <View>
           <View className="h-10 w-10 bg-black rounded-full" />
@@ -40,7 +40,7 @@ const HomeHeader = ({ activeTab, setActiveTab }: HomeHeaderProps) => {
       </View>
     </View>
 
-    <View>
+    <View className = "px-4">
       <TextInput
         className="rounded-xl px-4 py-3 mt-2 h-[50px] bg-transparent border border-dark-5 placeholder:text-[#B8B8B8]"
         placeholder="Find your need service"
@@ -50,7 +50,7 @@ const HomeHeader = ({ activeTab, setActiveTab }: HomeHeaderProps) => {
     </View>
 
     <View
-      className=""
+      className="px-3"
       style={{
         width: "100%",
         alignItems: "center",
@@ -69,7 +69,7 @@ const HomeHeader = ({ activeTab, setActiveTab }: HomeHeaderProps) => {
       />
     </View>
 
-    <View className="mb-2">
+    <View className="px-4">
       <PillTabs
         tabs={tabs}
         onChangeTab={setActiveTab}
