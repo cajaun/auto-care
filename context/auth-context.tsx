@@ -33,6 +33,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const login = async (email: string, password: string) => {
     try {
       await loginUser(email, password);
+
     } catch (error) {
       console.error("Login error", error);
     }
@@ -41,6 +42,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const logout = async () => {
     try {
       await logoutUser();
+      console.log("logged out")
     } catch (error) {
       console.error("Logout error", error);
     }

@@ -1,8 +1,19 @@
 import { View, Text } from 'react-native'
-import React from 'react'
-import { Stack } from 'expo-router'
+import React, { useEffect } from 'react'
+import { router, Stack } from 'expo-router'
+import { useAuth } from '@/context/auth-context';
 
 const RootLayout = () => {
+  const { user, loading } = useAuth();
+
+  useEffect(() => {
+    if (!loading && !user) {
+      router.replace("/(auth)/auth-screen");
+    }
+  }, [user, loading]);
+
+  if (loading) return null;
+
   return (
     <Stack >
     <Stack.Screen name="(tabs)" options={{ headerShown: false }} />

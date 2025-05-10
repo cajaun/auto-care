@@ -22,14 +22,14 @@ const ProfileScreen = () => {
         />
 
         <SafeAreaView
-          className="flex-row justify-between items-center px-4 pt-10"
+          className="flex-row justify-between items-center px-4 pt-4"
           style={{ position: "absolute", top: 0, left: 0, right: 0 }}
         >
           <Pressable onPress={() => router.back()}>
             <SymbolView name="arrow.left" tintColor={"#fff"} />
           </Pressable>
           <Text className="text-2xl font-semibold text-white">
-            Parts Details
+            Profile
           </Text>
           <View className="w-6" />
         </SafeAreaView>

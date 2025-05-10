@@ -34,7 +34,6 @@ export  const listItems = [
       onPress: async () => {
         try {
           await logoutUser();
-
         } catch (error) {
           console.error("Logout failed", error);
         }

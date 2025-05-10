@@ -20,9 +20,11 @@ export default {
     userInterfaceStyle: "automatic",
     newArchEnabled: true,
     ios: {
+      bundleIdentifier: "com.anonymous.autocarecomponents",
       supportsTablet: true,
     },
     android: {
+      // package: "com.anonymous.autocarecomponents",
       adaptiveIcon: {
         foregroundImage: "./assets/images/adaptive-icon.png",
         backgroundColor: "#ffffff",
