@@ -102,7 +102,8 @@ const SignInForm = () => {
         </View>
 
         <View className="flex-row gap-x-4">
-          <PressableScale className="flex-1 bg-white rounded-xl h-[50px] items-center justify-center px-2">
+
+          <PressableScale  className="flex-1 bg-white rounded-xl h-[50px] items-center justify-center px-2">
             <View>
               <Facebook width={24} height={24} />
             </View>

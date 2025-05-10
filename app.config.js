@@ -12,6 +12,9 @@ export default {
       MESSAGING_SENDER_ID: process.env.MESSAGING_SENDER_ID,
       APP_ID: process.env.APP_ID,
       MEASUREMENT_ID: process.env.MEASUREMENT_ID,
+      eas: {
+        "projectId": "de436f27-9d99-4889-af5b-40b7e0ab027d"
+      }
     },
     version: "1.0.0",
     orientation: "portrait",
@@ -22,9 +25,11 @@ export default {
     ios: {
       bundleIdentifier: "com.anonymous.autocarecomponents",
       supportsTablet: true,
+      googleServicesFile: "./GoogleService-Info.plist"
     },
     android: {
-      // package: "com.anonymous.autocarecomponents",
+      package: "com.anonymous.autocarecomponents",
+      googleServicesFile: "./google-services.json",
       adaptiveIcon: {
         foregroundImage: "./assets/images/adaptive-icon.png",
         backgroundColor: "#ffffff",
@@ -36,7 +41,32 @@ export default {
       favicon: "./assets/images/favicon.png",
     },
     plugins: [
+      
       "expo-router",
+      [
+        "react-native-fbsdk-next",
+        {
+          "appID": process.env.FACEBOOK_APP_ID,
+          "clientToken": process.env.FACEBOOK_CLIENT_TOKEN,
+          "displayName": "auto-care",
+          "scheme": process.env.FACEBOOK_SCHEME,
+          "advertiserIDCollectionEnabled": false,
+          "autoLogAppEventsEnabled": false,
+          "isAutoInitEnabled": true,
+          "iosUserTrackingPermission": "This identifier will be used to deliver personalized ads to you."
+        }
+      ],
+      "@react-native-firebase/app",
+      "@react-native-firebase/auth",
+      
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "useFrameworks": "static"
+          }
+        }
+      ],
       [
         "expo-splash-screen",
         {
@@ -45,6 +75,8 @@ export default {
           resizeMode: "contain",
           backgroundColor: "#ffffff",
         },
+        
+        
       ],
     ],
     experiments: {
