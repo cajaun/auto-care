@@ -1,6 +1,6 @@
 import { View, Text, TextInput } from 'react-native'
 import React from 'react'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
 import { SymbolView } from 'expo-symbols'
 import { Image } from 'expo-image'
 import PillTabs from './ui/top-tabs/pillTabs'
@@ -15,8 +15,11 @@ interface HomeHeaderProps {
 
 
 const HomeHeader = ({ activeTab, setActiveTab }: HomeHeaderProps) => {
+
+
+
   return (
-    <SafeAreaView className="bg-white rounded-es-[36px] rounded-ee-[36px]  gap-y-5">
+    <View className="bg-white rounded-es-[36px] rounded-ee-[36px]  gap-y-5 py-6" >
     <View className="flex-row justify-between items-center px-4 ">
       <View className="flex-row justify-center items-center gap-x-4">
         <View>
@@ -69,7 +72,7 @@ const HomeHeader = ({ activeTab, setActiveTab }: HomeHeaderProps) => {
       />
     </View>
 
-    <View className="px-4">
+    <View className="px-5">
       <PillTabs
         tabs={tabs}
         onChangeTab={setActiveTab}
@@ -79,7 +82,7 @@ const HomeHeader = ({ activeTab, setActiveTab }: HomeHeaderProps) => {
         indicatorStyle={[pillTabsStyles.indicatorStyle]}
       />
     </View>
-  </SafeAreaView>
+  </View>
   )
 }
 

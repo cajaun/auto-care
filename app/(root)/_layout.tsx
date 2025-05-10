@@ -9,6 +9,7 @@ const RootLayout = () => {
     <Stack.Screen name="(details)/(services)/[id]" options={{ headerShown: false }} />
     <Stack.Screen name="(details)/(rent)/[id]" options={{ headerShown: false }} />
     <Stack.Screen name="(details)/(selling)/[id]" options={{ headerShown: false }} />
+    <Stack.Screen name="(profile)" options={{ headerShown: false }} />
     </Stack>
   )
 }

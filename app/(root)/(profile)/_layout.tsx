@@ -5,9 +5,10 @@ import { Stack } from "expo-router";
 const ProfileLayout = () => {
   const colorScheme = useColorScheme();
   return (
-<View>
-  
-</View>
+    <Stack>
+      
+      <Stack.Screen name="index" options={{ headerShown: false }} />
+    </Stack>
   );
 };
 

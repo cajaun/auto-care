@@ -1,4 +1,4 @@
-import { Tabs } from "expo-router";
+import { router, Tabs } from "expo-router";
 import { Platform, useColorScheme, StyleSheet } from "react-native";
 import { BlurView } from "expo-blur";
 import { SymbolView } from "expo-symbols";
@@ -35,6 +35,12 @@ export default function TabLayout() {
             options={{
                 title: "Profile"
             }}
+            listeners={{
+                tabPress: (e) => {
+                  e.preventDefault();
+                  router.push('/(root)/(profile)')
+                }
+              }}
         />
     </Tabs>
   );

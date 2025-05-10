@@ -22,8 +22,8 @@ const HomeServices = ({ activeTab }: HomeServicesProps) => {
   const paddingBottom = useBottomTabOverflow();
   const numColumns = activeTab === "rent" ? 1 : 2;
 
-  const detailsHandler = (itemId: string, itemName: string, type: string) => {
-    router.push(`/(root)/(details)/(${type})/${itemId}?name=${itemName}`);
+  const detailsHandler = (itemId: string, itemName: string, type: string, itemImage?: string) => {
+    router.push(`/(root)/(details)/(${type})/${itemId}?name=${itemName}&image=${itemImage}`);
   };
 
   return (

@@ -12,75 +12,13 @@ import { useRouter } from "expo-router";
 import { listItems } from "@/util/list-items";
 
 const ProfileScreen = () => {
-  const [isNotificationsOn, setIsNotificationsOn] = useState(true);
-  const router = useRouter();
+
 
 
   return (
     <View className="flex-1 bg-white">
     
-      <View className="w-full bg-[#1A202F]">
-        <Image
-          source={require("@/assets/images/profile-background.png")}
-          style={{ width: "100%", height: 200 }}
-          contentFit="cover"
-        />
-      </View>
-
-
-      <View className="flex-row justify-between items-center px-6 -mt-[40px]">
-        <Image
-          source={{ uri: "https://picsum.photos/seed/696/3000/2000" }}
-          style={{
-            height: 80,
-            width: 80,
-            borderRadius: 40,
-          }}
-          contentFit="cover"
-        />
-      </View>
-
- 
-      <View className="mt-4 px-6 gap-y-3">
-        <Text className="text-xl font-bold text-[#0C1A30]">Denuyel</Text>
-        <Text className="text-dark-90 mt-1 text-lg">
-          2972 Westheimer Rd. Santa Ana,{"\n"}Illinois 85486
-        </Text>
-      </View>
-
-   
-      <View className="gap-y-2 px-6 mt-8">
-        {listItems.map((item, index, arr) => (
-          <View key={index} className = "">
-            <TouchableOpacity
-              activeOpacity={item.isSwitch ? 1 : 0.7}
-              onPress={item.onPress}
-              disabled={item.isSwitch}
-              className="flex-row justify-between items-center py-4"
-            >
-              <View className="flex-row items-center gap-x-3">
-                <View className="bg-dark-5 h-10 w-10 rounded-full items-center justify-center">
-                  <Ionicons name={item.icon as any} size={20} color="#0C1A30" />
-                </View>
-                <Text className="">{item.label}</Text>
-              </View>
-
-              {item.isSwitch && (
-                <Switch
-                  value={isNotificationsOn}
-                  onValueChange={setIsNotificationsOn}
-                  trackColor={{ false: "#D1D5DB", true: "#22C55E" }}
-                  thumbColor="#fff"
-                />
-              )}
-            </TouchableOpacity>
-
-   
-              <View className="h-[1px] bg-dark-5 w-full" />
-           
-          </View>
-        ))}
-      </View>
+      
     </View>
   );
 };

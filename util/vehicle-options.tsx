@@ -11,10 +11,10 @@ import { router } from "expo-router";
 
 export const vehicleOptionsRenderMap: Record<
   string,
-  ({ item, type, onPress }: { item: any; type: string; onPress: (itemId: string, itemName: string, type: string) => void }) => JSX.Element
+  ({ item, type, onPress }: { item: any; type: string; onPress: (itemId: string, itemName: string, type: string, itemImage?: string) => void }) => JSX.Element
 > = {
   services: ({ item, type, onPress }) => (
-    <TouchableBounce style={{ width: "48%" }} onPress={() => onPress(item.id, item.name, type)}>
+    <TouchableBounce style={{ width: "48%" }} onPress={() => onPress(item.id, item.name, type, item.image)}>
       <View
         className="rounded-lg overflow-hidden"
         style={{
@@ -53,7 +53,7 @@ export const vehicleOptionsRenderMap: Record<
     </TouchableBounce>
   ),
 
-  rent: ({ item, type, onPress })  => (
+  rent: ({ item, type, onPress})  => (
     <TouchableBounce style={{ width: "100%", height: 94 }} onPress={() => onPress(item.id, item.name, type)} >
       <View
         className="bg-white flex-row  justify-between items-center  rounded-2xl "
@@ -84,9 +84,10 @@ export const vehicleOptionsRenderMap: Record<
     </TouchableBounce>
   ),
 
-  selling: ({ item, type, onPress })  => (
-    <TouchableBounce style={{ width: "48%" }} onPress={() => onPress(item.id, item.name, type)}>
-      <View className="bg-white p-2 rounded-xl ">
+  selling: ({ item, type, onPress})  => (
+    <TouchableBounce style={{ width: "48%" }} onPress={() => onPress(item.id, item.name, type, item.image)}>
+
+      <View className=" p-2 rounded-xl " style={{borderColor: "#E8E9EA",  borderWidth: 1,    }}>
         <View style={{ width: "100%", height: 120 }}>
           <Image
             className=""

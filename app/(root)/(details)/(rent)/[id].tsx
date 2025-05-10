@@ -1,7 +1,7 @@
-import { View, Text, ScrollView, FlatList } from "react-native";
+import { View, Text, ScrollView, FlatList, Pressable } from "react-native";
 import React from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { useLocalSearchParams } from "expo-router";
+import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
+import { router, useLocalSearchParams } from "expo-router";
 import { Image } from "expo-image";
 import { SymbolView } from "expo-symbols";
 import { useBottomTabOverflow } from "@/components/utils.tsx/body-scroll-view";
@@ -11,19 +11,19 @@ import TouchableBounce from "@/components/ui/touchable-bounce";
 const RentDetails = () => {
   const { id, name } = useLocalSearchParams();
   const paddingBottom = useBottomTabOverflow();
+  const {top} = useSafeAreaInsets();
 
-  console.log(id);
 
   return (
-    <SafeAreaView>
+    <View style={{paddingTop: top}}>
       <ScrollView>
         <View className="flex-row justify-between items-center px-4">
-          <View>
-            <SymbolView name="arrow.left" />
-          </View>
+          <Pressable onPress={() => router.back()}>
+            <SymbolView name="arrow.left" tintColor={"#1A202F"} />
+          </Pressable>
 
           <View>
-            <Text className="text-2xl font-semibold">{name}</Text>
+            <Text className="text-2xl font-semibold text-dark-90">{name}</Text>
           </View>
 
           <View>
@@ -39,8 +39,9 @@ const RentDetails = () => {
           </View>
         </View>
 
-        <View className="p-4">
-          <Text className="font-bold text-xl">Popular Cars</Text>
+        <View className=" flex-row justify-between  items-center p-4">
+          <Text className="font-bold text-xl text-dark-90">Popular Cars</Text>
+            <Text className = "text-dark-50">See all</Text>
         </View>
 
         <View className="px-4">
@@ -78,7 +79,7 @@ const RentDetails = () => {
                     </View>
 
                     <View className="flex-row justify-between items-center ">
-                      <Text className="mt-2 font-bold text-black text-2xl">
+                      <Text className="mt-2 font-bold text-dark-90 text-2xl">
                         ${item.price}
                       </Text>
                       <View style={{ width: 30, height: 30 }}>
@@ -101,7 +102,7 @@ const RentDetails = () => {
           />
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 
