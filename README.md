@@ -4,6 +4,10 @@ Auto-Care is a React Native application built with **Expo** that helps users man
 
 ---
 
+## Demo
+
+![Auto-Care Demo](./assets/demo.gif)
+
 ## 📦 Tech Stack
 
 - **React Native + Expo** – Cross-platform development
@@ -109,15 +113,6 @@ In the output, you'll find options to open the app in a
 
 You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
 
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
 
 ## Learn more
 
