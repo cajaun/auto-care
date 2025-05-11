@@ -6,7 +6,7 @@ Auto-Care is a React Native application built with **Expo** that helps users man
 
 ## Demo
 
-![Auto-Care Demo](./assets/demo.gif)
+[Watch the demo on Streamable](https://streamable.com/32lsiq)
 
 ## 📦 Tech Stack
 
