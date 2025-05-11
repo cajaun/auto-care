@@ -42,47 +42,7 @@ Auto-Care is a React Native application built with **Expo** that helps users man
 
 ## 📁 Project Structure
 
-\`\`\`
-app/
-│
-├── auth/                # Authentication flow (login, signup)
-├── root/                # Root-level routing logic
-├── details/             # Detail screens for items/services
-├── payments/            # Payment screens and flow
-├── profile/             # User profile screens
-├── tabs/                # Bottom tab navigation (history, home, profile, workshop)
-│   ├── history/
-│   ├── home/
-│   ├── profile/
-│   └── workshop/
-│   ├── _layout.tsx      # Tab layout
-│
-├── _layout.tsx          # Root layout file
-├── index.tsx            # App entry point
-│
-assets/                  # Image,font, icons assets
-components/
-├── forms/               # Reusable form components
-├── ui/                  # Custom UI components
-│   ├── pill-tabs/
-│   ├── sheet/
-│   ├── skeleton-loaders/
-│   ├── tab-bar/
-│   ├── top-tabs/
-│   ├── pressable-scale.tsx
-│   ├── segmented-tab.tsx
-│   └── touchable-bounce.tsx
-│
-context/                 # Global React contexts (e.g., auth-context)
-data/                    # Static or mock data
-hooks/                   # Custom React hooks
-services/
-├── auth-service.ts      # Firebase Auth service
-├── payment-service.ts   # Payment processing logic
-types/                   # TypeScript types
-utils/                   # Utility functions
-.env                     # Environment variables
-\`\`\`
+<pre lang="text"> ```plaintext app/ │ ├── auth/ # Authentication flow (login, signup) ├── root/ # Root-level routing logic ├── details/ # Detail screens for items/services ├── payments/ # Payment screens and flow ├── profile/ # User profile screens ├── tabs/ # Bottom tab navigation (history, home, profile, workshop) │ ├── history/ │ ├── home/ │ ├── profile/ │ └── workshop/ │ ├── _layout.tsx # Tab layout │ ├── _layout.tsx # Root layout file ├── index.tsx # App entry point │ assets/ # Image, font, icons assets components/ ├── forms/ # Reusable form components ├── ui/ # Custom UI components │ ├── pill-tabs/ │ ├── sheet/ │ ├── skeleton-loaders/ │ ├── tab-bar/ │ ├── top-tabs/ │ ├── pressable-scale.tsx │ ├── segmented-tab.tsx │ └── touchable-bounce.tsx │ context/ # Global React contexts (e.g., auth-context) data/ # Static or mock data hooks/ # Custom React hooks services/ ├── auth-service.ts # Firebase Auth service ├── payment-service.ts # Payment processing logic types/ # TypeScript types utils/ # Utility functions .env # Environment variables ``` </pre>
 
 ---
 
