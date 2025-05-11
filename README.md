@@ -4,9 +4,7 @@ Auto-Care is a React Native application built with **Expo** that helps users man
 
 ---
 
-## Demo
 
-<video src="https://github.com/user-attachments/assets/34282556-c464-45bf-8247-f2042e7b84d4" controls width="500" />
 
 
 ## 📦 Tech Stack
@@ -128,3 +126,8 @@ Join our community of developers creating universal apps.
 
 - [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
 - [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+
+
+## Demo
+
+<video src="https://github.com/user-attachments/assets/34282556-c464-45bf-8247-f2042e7b84d4" controls width="500" />
