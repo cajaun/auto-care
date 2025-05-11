@@ -89,6 +89,11 @@ utils/                   # Utility functions and datasets
 
 ---
 
+## Demo
+
+<video src="https://github.com/user-attachments/assets/34282556-c464-45bf-8247-f2042e7b84d4" controls width="500" />
+
+
 ## Get started
 
 1. Install dependencies
@@ -128,6 +133,4 @@ Join our community of developers creating universal apps.
 - [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
 
 
-## Demo
 
-<video src="https://github.com/user-attachments/assets/34282556-c464-45bf-8247-f2042e7b84d4" controls width="500" />
