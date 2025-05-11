@@ -1,7 +1,10 @@
 import { useMemo, useRef } from "react";
 import { Animated } from "react-native";
 
+// fadeIn animation for when theres a need for smooth transitions for data/components
 export function FadeIn({ children }: { children: React.ReactNode }) {
+
+
   const opacity = useRef(new Animated.Value(0)).current;
   useMemo(() => {
     return Animated.timing(opacity, {

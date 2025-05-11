@@ -8,6 +8,7 @@ const SplashScreen = () => {
   const { user, loading } = useAuth();
 
   useEffect(() => {
+     // only run logic after auth state has finished loading
     if (!loading) {
       if (user) {
         router.replace("/(root)/(tabs)/home");

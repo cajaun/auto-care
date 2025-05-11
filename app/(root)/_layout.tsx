@@ -7,6 +7,7 @@ const RootLayout = () => {
   const { user, loading } = useAuth();
 
   useEffect(() => {
+     // redirect to auth screen if user is not authenticated and auth has finished loading
     if (!loading && !user) {
       router.replace("/(auth)/auth-screen");
     }
@@ -25,6 +26,7 @@ const RootLayout = () => {
     <Stack.Screen name="(payments)/(confirm)" options={{ headerShown: false }} />
     <Stack.Screen name="(payments)/(method)" options={{ headerShown: false }} />
     <Stack.Screen name="(profile)" options={{ headerShown: false }} />
+
     </Stack>
   )
 }

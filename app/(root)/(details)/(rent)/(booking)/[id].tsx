@@ -13,8 +13,8 @@ import { PressableScale } from "@/components/ui/pressable-scale";
 import { FlatList } from "react-native-gesture-handler";
 import { useBottomTabOverflow } from "@/components/utils.tsx/body-scroll-view";
 import TouchableBounce from "@/components/ui/touchable-bounce";
-import CheckOutSheet from "@/components/ui/check-out-sheet";
-import { useSheetRef } from "@/components/ui/sheet";
+import CheckOutSheet from "@/components/ui/sheet/check-out-sheet";
+import { useSheetRef } from "@/components/ui/sheet/sheet";
 
 const modelDetails = [
   {
@@ -46,7 +46,11 @@ const RentBooking = () => {
   const fixedName = Array.isArray(name) ? name[0] : name;
   return (
     <View style={{ flex: 1, paddingTop: top }} className=" bg-white ">
-      <CheckOutSheet bottomSheetModalRef={bottomSheetModalRef} type={"rent"} name={fixedName} />
+      <CheckOutSheet
+        bottomSheetModalRef={bottomSheetModalRef}
+        type={"rent"}
+        name={fixedName}
+      />
 
       <View className="flex-1">
         <View className="px-4">
@@ -54,7 +58,7 @@ const RentBooking = () => {
             <Pressable onPress={() => router.back()}>
               <SymbolView name="arrow.left" tintColor={"#1A202F"} />
             </Pressable>
-            <Text className="text-2xl font-semibold text-dark-90">
+            <Text className="text-xl font-semibold text-dark-90">
               Rent details
             </Text>
             <View className="w-4" />
@@ -62,9 +66,9 @@ const RentBooking = () => {
         </View>
 
         <View className="gap-y-5 ">
-          <View className="px-4 ">
+          <View className="px-4 gap-y-8">
             <View
-              className="items-center justify-center relative rounded-3xl "
+              className="items-center justify-center rounded-xl "
               style={{ width: "100%", height: 190 }}
             >
               <Image
@@ -73,14 +77,32 @@ const RentBooking = () => {
                 contentFit="cover"
               />
             </View>
+
+            <View style={{ width: "100%", height: 53 }}>
+              <Image
+                source={require("@/assets/images/car-carousel.png")}
+                style={{ width: "100%", height: "100%", borderRadius: 12 }}
+                contentFit="cover"
+              />
+            </View>
           </View>
 
           <View className="pt-8 gap-y-3 px-4">
-            <View className="flex-row">
-              <Text className="text-3xl font-bold">Service Description</Text>
+            <View className="flex-row justify-between">
+              <View>
+                <Text className="text-xl font-bold">Volvo C40 Recharge</Text>
+              </View>
+              <View className="flex-row items-center">
+                <SymbolView name="star.fill" tintColor="#FFB23F" size={20} />
+                <Text className="ml-1 mt-1 text-dark-90 text-lg">4.9</Text>
+              </View>
             </View>
 
-            <View>
+            <View className="flex-row gap-x-2 items-center ">
+              <View>
+                <SymbolView name="person.fill" tintColor="#767982" size={25} />
+              </View>
+
               <Text className="text-dark-50 text-lg">1605k User</Text>
             </View>
 
@@ -92,9 +114,9 @@ const RentBooking = () => {
             </View>
           </View>
 
-          <View className="pt-8 gap-y-3">
+          <View className="pt-4 gap-y-3">
             <View className="flex-row px-4">
-              <Text className="text-3xl font-bold">Model Details</Text>
+              <Text className="text-xl font-bold">Model Details</Text>
             </View>
 
             <FlatList
@@ -107,21 +129,17 @@ const RentBooking = () => {
                 <TouchableBounce style={{ width: itemWidth, marginRight: 12 }}>
                   <View
                     className="bg-dark-90/5 p-2 rounded-xl  justify-center items-center"
-                    style={{ width: "100%" }}
+                    style={{ width: "100%", height: 100 }}
                   >
                     <View className="px-2 " style={{ marginVertical: "auto" }}>
-                      <Text className="text-xl font-semibold mt-2">
+                      <Text className="text-xl font-semibold mt-2 text-dark-50">
                         {item.name}
                       </Text>
 
                       <View className=" items-center">
-                        <Text className="ml-1 mt-1 text-dark-50">
+                        <Text className="mt-1 font0b">
                           {item.characteristics}
                         </Text>
-                      </View>
-
-                      <View className="flex-row justify-between items-center ">
-                        <Text className="mt-2 font-bold text-dark-90 text-2xl"></Text>
                       </View>
                     </View>
                   </View>
@@ -142,17 +160,19 @@ const RentBooking = () => {
       >
         <View className="">
           <View>
-            <Text className="text-xl">Total</Text>
+            <Text className="text-xl ">Total</Text>
           </View>
 
           <View>
-            <Text className="text-2xl">$400</Text>
+            <Text className="text-xl font-bold">
+              $400<Text className="text-xl font-semibold text-dark-40">/h</Text>
+            </Text>
           </View>
         </View>
 
         <PressableScale
           onPress={() => bottomSheetModalRef.current?.present()}
-          className="bg-accent h-[50px]  justify-center items-center px-5  rounded-2xl"
+          className="bg-accent h-[50px]  justify-center items-center px-5  rounded-xl"
           style={{ width: "60%" }}
         >
           <Text className="text-white text-lg font-semibold">Book now</Text>

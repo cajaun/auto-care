@@ -1,44 +1,38 @@
-import { View, Text, Pressable, StyleSheet } from "react-native";
-import React, { useCallback, useMemo, useState } from "react";
-import {
-  SafeAreaView,
-  useSafeAreaInsets,
-} from "react-native-safe-area-context";
+import { View, Text, Pressable } from "react-native";
+import React, { useState } from "react";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { router, useLocalSearchParams } from "expo-router";
 import { getImageName } from "@/util/get-image-name";
 import { vehicleServices } from "@/util/vehicle-services";
 import { PressableScale } from "@/components/ui/pressable-scale";
 import { Image } from "expo-image";
 import { SymbolView } from "expo-symbols";
-import { Sheet, useSheetRef } from "@/components/ui/sheet";
-import { BottomSheetView } from "@gorhom/bottom-sheet";
-import { SegmentedControl } from "@/components/ui/segmented-tab";
-import DateTimePicker, {
-  DateType,
-  useDefaultClassNames,
-  useDefaultStyles,
-} from "react-native-ui-datepicker";
-import CheckOutSheet from "@/components/ui/check-out-sheet";
+import { useSheetRef } from "@/components/ui/sheet/sheet";
+import CheckOutSheet from "@/components/ui/sheet/check-out-sheet";
 
 const ServicesDetails = () => {
   const { id, name } = useLocalSearchParams();
-  const { top } = useSafeAreaInsets();
-
+  const { top, bottom } = useSafeAreaInsets();
+  const [checked, setChecked] = useState(false);
   const imageName = getImageName(vehicleServices, name as string);
 
   const bottomSheetModalRef = useSheetRef();
   const fixedName = Array.isArray(name) ? name[0] : name;
   return (
     <View style={{ flex: 1, paddingTop: top }} className=" bg-white px-4">
-      <CheckOutSheet bottomSheetModalRef={bottomSheetModalRef} type={"services"} name={fixedName} />
+      <CheckOutSheet
+        bottomSheetModalRef={bottomSheetModalRef}
+        type={"services"}
+        name={fixedName}
+      />
 
-      <View className="">
+      <View className="flex-1">
         <View>
           <View className="flex-row justify-between items-center px-4 mb-4">
             <Pressable onPress={() => router.back()}>
               <SymbolView name="arrow.left" tintColor={"#1A202F"} />
             </Pressable>
-            <Text className="text-2xl font-semibold text-dark-90">{name}</Text>
+            <Text className="text-xl font-semibold text-dark-90">{name}</Text>
             <View className="w-4" />
           </View>
         </View>
@@ -46,7 +40,7 @@ const ServicesDetails = () => {
         <View className="gap-y-5">
           <View className=" ">
             <View
-              className="items-center justify-center relative rounded-3xl "
+              className="items-center justify-center relative rounded-xl "
               style={{ width: "100%", height: 190 }}
             >
               <Image
@@ -67,12 +61,22 @@ const ServicesDetails = () => {
             </View>
           </View>
 
-          <View className="pt-8 gap-y-3">
-            <View className="flex-row">
-              <Text className="text-2xl font-bold">Service Description</Text>
+          <View className="pt-8 gap-y-3 ">
+            <View className="flex-row justify-between">
+              <View>
+                <Text className="text-xl font-bold">Service Description</Text>
+              </View>
+              <View className="flex-row items-center">
+                <SymbolView name="star.fill" tintColor="#FFB23F" size={20} />
+                <Text className="ml-1 mt-1 text-dark-90 text-lg">4.9</Text>
+              </View>
             </View>
 
-            <View>
+            <View className="flex-row gap-x-2 items-center ">
+              <View>
+                <SymbolView name="person.fill" tintColor="#767982" size={25} />
+              </View>
+
               <Text className="text-dark-50 text-lg">1605k User</Text>
             </View>
 
@@ -83,17 +87,24 @@ const ServicesDetails = () => {
               </Text>
             </View>
 
-            <View>
-              <Text className="text-dark-90 ">I need parts for my vehicle</Text>
+            <View className="flex-row items-center gap-x-2">
+              <Pressable
+                onPress={() => setChecked(!checked)}
+                className={`w-5 h-5 border-2 rounded ${
+                  checked ? "bg-accent border-accent" : "border-gray-400"
+                }`}
+              />
+              <Text className="text-dark-90">I need parts for my vehicle</Text>
             </View>
-            <View className="h-[1px] bg-dark-5 w-full" />
+
+            <View className="h-3 border-b-[0.25px] border-dark-90/25" />
           </View>
 
-          <View className=" pb-8 ">
-            <View className="bg-white shadow-md  py-4 px-2 rounded-2xl">
+          <View className=" ">
+            <View className="bg-white shadow-sm py-4 px-2 rounded-xl">
               <View className="p-3 gap-y-6 ">
                 <View className="">
-                  <Text className="text-2xl font-bold">
+                  <Text className="text-xl font-bold">
                     Emergency Vehicle Information
                   </Text>
                 </View>
@@ -124,16 +135,17 @@ const ServicesDetails = () => {
               </View>
             </View>
           </View>
-          <View>
+         
+        </View>
+      </View>
+      <View className = ""  style={{ paddingBottom: bottom }}>
             <PressableScale
               onPress={() => bottomSheetModalRef.current?.present()}
-              className="bg-accent h-[50px] flex flex-row gap-[6px] justify-center items-center px-5 mx-auto w-full rounded-2xl"
+              className="bg-accent h-[50px] flex flex-row gap-[6px] justify-center items-center px-5 mx-auto w-full rounded-xl"
             >
               <Text className="text-white text-lg font-semibold">Book now</Text>
             </PressableScale>
           </View>
-        </View>
-      </View>
     </View>
   );
 };

@@ -4,15 +4,27 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { SymbolView } from "expo-symbols";
 import { router, useLocalSearchParams } from "expo-router";
 import { PressableScale } from "@/components/ui/pressable-scale";
+import { handlePayment } from "@/services/payment-service";
 
 const SystemScreen = () => {
   const { top, bottom } = useSafeAreaInsets();
-  const { date,type, name } = useLocalSearchParams();
+  const { date, type, name } = useLocalSearchParams();
   const [selectedSystem, setSelectedSystem] = useState("");
 
-
   const systemHandler = () => {
-    router.push(`/(root)/(payments)/(method)?system=${selectedSystem}&date=${date}&type=${type}&name=${name}`);
+    if (selectedSystem === "cod") {
+      handlePayment({
+        type: Array.isArray(type) ? type[0] : type,
+        name: Array.isArray(name) ? name[0] : name,
+        date: Array.isArray(date) ? date[0] : date,
+        selectedMethod: "cod",
+      });
+      return;
+    }
+
+    router.push(
+      `/(root)/(payments)/(method)?system=${selectedSystem}&date=${date}&type=${type}&name=${name}`
+    );
   };
 
   return (
@@ -23,16 +35,14 @@ const SystemScreen = () => {
             <Pressable onPress={() => router.back()}>
               <SymbolView name="arrow.left" tintColor={"#1A202F"} />
             </Pressable>
-            <Text className="text-2xl font-semibold text-dark-90">Payment</Text>
+            <Text className="text-xl font-semibold text-dark-90">Payment</Text>
             <View className="w-6" />
           </View>
         </View>
 
         <View className="gap-y-4">
           <View>
-            <Text className="text-2xl font-semibold">
-              Your current location
-            </Text>
+            <Text className="text-xl font-semibold">Your current location</Text>
           </View>
 
           <View
@@ -55,7 +65,7 @@ const SystemScreen = () => {
 
         <View className="gap-y-4">
           <View>
-            <Text className="text-2xl font-semibold">Payment System</Text>
+            <Text className="text-xl font-semibold">Payment System</Text>
           </View>
 
           <Pressable
@@ -95,14 +105,11 @@ const SystemScreen = () => {
             <View className="flex-row justify-between items-center px-2">
               <View className="flex-row items-center">
                 <View className="p-4 bg-dark-90/5 rounded-lg">
-                  <SymbolView
-                    name="rectangle.and.hand.point.up.left.fill"
-                    tintColor="black"
-                  />
+                  <SymbolView name="hand.wave.fill" tintColor="black" />
                 </View>
                 <View style={{ marginLeft: 12 }}>
                   <Text numberOfLines={2} className="font-semibold text-lg">
-                    Cash on Delivery
+                    Cash on Pay
                   </Text>
                 </View>
               </View>
@@ -117,11 +124,11 @@ const SystemScreen = () => {
 
         <View className="flex-row justify-between">
           <View>
-            <Text className="text-2xl font-semibold">Total Amount</Text>
+            <Text className="text-xl font-semibold">Total Amount</Text>
           </View>
 
           <View>
-            <Text className="text-2xl font-semibold text-accent">$600</Text>
+            <Text className="text-2xl font-bold text-accent">$600</Text>
           </View>
         </View>
       </View>
@@ -129,7 +136,7 @@ const SystemScreen = () => {
       <View style={{ paddingBottom: bottom }}>
         <PressableScale
           onPress={() => systemHandler()}
-          className="bg-accent h-[50px] flex flex-row gap-[6px] justify-center items-center px-5 mx-auto w-full rounded-2xl"
+          className="bg-accent h-[50px] flex flex-row gap-[6px] justify-center items-center px-5 mx-auto w-full rounded-xl"
         >
           <Text className="text-white text-lg font-semibold">Pay now</Text>
         </PressableScale>

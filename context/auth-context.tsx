@@ -17,10 +17,12 @@ interface AuthProviderProps {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+// provide authentication state and functions to the rest of the app
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
+  // listen for authentication state changes
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
@@ -30,6 +32,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     return () => unsubscribe();
   }, []);
 
+  // login handler
   const login = async (email: string, password: string) => {
     try {
       await loginUser(email, password);
@@ -39,6 +42,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   };
 
+  // logout handler
   const logout = async () => {
     try {
       await logoutUser();
@@ -49,12 +53,14 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   return (
+    // provide the auth context with user, loading, login, and logout values
     <AuthContext.Provider value={{ user, loading, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
+// hook to to access the authentication context
 export const useAuth = (): AuthContextType => {
   const context = useContext(AuthContext);
   if (!context) {

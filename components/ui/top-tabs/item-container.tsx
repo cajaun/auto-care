@@ -1,20 +1,14 @@
-import { BlurView } from "expo-blur";
 import React, { FC, PropsWithChildren } from "react";
-import { useWindowDimensions, StyleSheet, Platform } from "react-native";
+import { useWindowDimensions,  Platform } from "react-native";
 import Animated, {
-  interpolate,
-  useAnimatedProps,
-  Extrapolation,
   SharedValue,
   useAnimatedStyle,
 } from "react-native-reanimated";
-
 
 type Props = {
   index: number;
   activeTabIndex: SharedValue<number>;
   prevActiveTabIndex: SharedValue<number>;
-  horizontalListOffsetX: SharedValue<number>;
   isHorizontalListScrollingX: SharedValue<boolean>;
 };
 
@@ -23,16 +17,22 @@ export const ItemContainer: FC<PropsWithChildren<Props>> = ({
   index,
   activeTabIndex,
   prevActiveTabIndex,
-  horizontalListOffsetX,
   isHorizontalListScrollingX,
 }) => {
   const { width } = useWindowDimensions();
 
+  
   const rContainerStyle = useAnimatedStyle(() => {
+
+     // skip animation logic for Android to avoid potential layout bugs and improve performance
     if (Platform.OS === "android") {
       return {};
     }
 
+
+    //  if the active tab is more than one index away and this item is not active,
+    // hide it by setting opacity to 0 
+    //  helps reduce rendering cost on iOS
     if (
       Math.abs(activeTabIndex.value - prevActiveTabIndex.value) > 1 &&
       index !== activeTabIndex.value &&
@@ -41,30 +41,17 @@ export const ItemContainer: FC<PropsWithChildren<Props>> = ({
       return { opacity: 0 };
     }
 
-    const progress = horizontalListOffsetX.value / width;
-
-    const fadeOut = interpolate(progress, [index, index + 0.7], [1, 0], Extrapolation.CLAMP);
-    const fadeIn = interpolate(progress, [index - 0.3, index], [0, 1], Extrapolation.CLAMP);
-
-
-
-
     return {
-      opacity: fadeOut * fadeIn,
-      transform: [
-       
-      ],
+      transform: [],
     };
   });
 
-
-
   return (
-    <Animated.View style={[{ width }, rContainerStyle]} className="bg-neutral-200">
+    <Animated.View
+      style={[{ width }, rContainerStyle]}
+      className="bg-neutral-200"
+    >
       {children}
-   
     </Animated.View>
   );
 };
-
-

@@ -1,89 +1,117 @@
-import { View, Text, TextInput } from 'react-native'
-import React from 'react'
-import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
-import { SymbolView } from 'expo-symbols'
-import { Image } from 'expo-image'
-import PillTabs from '@/components/ui/pill-tabs/pill-tabs'
-import { pillTabsStyles } from '@/components/ui/pill-tabs/pill-tabs-styles'
-import { tabs } from '@/util/tabs'
-
+import { View, Text, TextInput } from "react-native";
+import React from "react";
+import { SymbolView } from "expo-symbols";
+import { Image } from "expo-image";
+import PillTabs from "@/components/ui/pill-tabs/pill-tabs";
+import { pillTabsStyles } from "@/components/ui/pill-tabs/pill-tabs-styles";
+import { tabs } from "@/util/tabs";
+import { getAuth } from "firebase/auth";
 
 interface HomeHeaderProps {
   activeTab: string;
   setActiveTab: (id: string) => void;
+  searchText: string;
+  setSearchText: (text: string) => void;
 }
 
+const HomeHeader = ({
+  activeTab,
+  setActiveTab,
+  searchText,
+  setSearchText,
+}: HomeHeaderProps) => {
 
-const HomeHeader = ({ activeTab, setActiveTab }: HomeHeaderProps) => {
 
+  const auth = getAuth();
 
+  // get the user that's logged in through the auth state 
+  const user = auth.currentUser;
+
+  const username = user?.displayName;
 
   return (
-    <View className="bg-white rounded-es-[36px] rounded-ee-[36px]  gap-y-5 py-6" >
-    <View className="flex-row justify-between items-center px-4 ">
-      <View className="flex-row justify-center items-center gap-x-4">
-        <View>
-          <View className="h-10 w-10 bg-black rounded-full" />
+    <View className="bg-white rounded-es-[36px] rounded-ee-[36px]  gap-y-5 py-6">
+      <View className="flex-row justify-between items-center px-4 ">
+        <View className="flex-row justify-center items-center gap-x-4">
+          <View>
+            <Image
+              source={{ uri: "https://picsum.photos/seed/696/3000/2000" }}
+              style={{
+                height: 40,
+                width: 40,
+                borderRadius: 20,
+              }}
+              contentFit="cover"
+            />
+          </View>
+
+          <View>
+            <Text className="text-xl font-bold">Welcome</Text>
+            <Text className=" font-semibold text-dark-50">{username}</Text>
+          </View>
         </View>
 
-        <View>
-          <Text className="text-2xl font-bold">Welcome</Text>
+        <View className="items-center">
+          <View>
+            <SymbolView
+              name="bell.fill"
+              type="hierarchical"
+              tintColor="#FF4040"
+              size={25}
+            />
+          </View>
         </View>
       </View>
 
-      <View className="">
-        <View>
-          <SymbolView
-            name="bell.fill"
-            type="hierarchical"
-            tintColor="#FF4040"
-            size={25}
+      <View className="px-4 mt-2">
+        <View className="flex-row items-center border border-dark-5 rounded-xl px-4 py-3 h-[50px] bg-transparent">
+          <SymbolView name="magnifyingglass" tintColor="#B8B8B8" size={25} />
+
+          <TextInput
+            className="flex-1 ml-2 bg-transparent"
+            placeholder="Find your need service"
+            value={searchText}
+            onChangeText={setSearchText}
+            secureTextEntry={false}
+            autoCapitalize="none"
           />
+
+          <SymbolView name="qrcode.viewfinder" tintColor="#B8B8B8" size={25} />
         </View>
       </View>
-    </View>
 
-    <View className = "px-4">
-      <TextInput
-        className="rounded-xl px-4 py-3 mt-2 h-[50px] bg-transparent border border-dark-5 placeholder:text-[#B8B8B8]"
-        placeholder="Find your need service"
-        secureTextEntry
-        autoCapitalize="none"
-      />
-    </View>
-
-    <View
-      className="px-3"
-      style={{
-        width: "100%",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <Image
-        source={require("@/assets/images/Banner.png")}
+      <View
+        className="px-3"
         style={{
-          width: "105%",
-          height: 200,
-          borderRadius: 12,
-          marginLeft: 24,
+          width: "100%",
+          alignItems: "center",
+          justifyContent: "center",
         }}
-        contentFit="cover"
-      />
-    </View>
+      >
+        <Image
+          source={require("@/assets/images/Banner.png")}
+          style={{
+            width: "105%",
+            height: 200,
+            borderRadius: 12,
+            marginLeft: 24,
+          }}
+          contentFit="cover"
+        />
+      </View>
 
-    <View className="px-5">
-      <PillTabs
-        tabs={tabs}
-        onChangeTab={setActiveTab}
-        activeTab={activeTab}
-        pillTabContainerStyle={pillTabsStyles.tabBarContainerStyle}
-        tabStyle={[pillTabsStyles.tabStyle]}
-        indicatorStyle={[pillTabsStyles.indicatorStyle]}
-      />
+      <View className="px-5">
+        <PillTabs
+          tabs={tabs}
+          onChangeTab={setActiveTab}
+          activeTab={activeTab}
+          pillTabContainerStyle={pillTabsStyles.tabBarContainerStyle}
+          tabStyle={[pillTabsStyles.tabStyle]}
+          indicatorStyle={[pillTabsStyles.indicatorStyle]}
+        />
+      </View>
     </View>
-  </View>
-  )
-}
+  );
+};
 
-export default HomeHeader
+export default HomeHeader;

@@ -7,8 +7,6 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 
-
-
 export const sharedConfigs = {
   tabBarSidePadding: 20,
   tabBarGap: 24,
@@ -34,19 +32,18 @@ export const TabIndicator: FC<Props> = ({
 }) => {
   const { width: windowWidth } = useWindowDimensions();
 
-
-
   const rIndicatorStyle = useAnimatedStyle(() => {
     const left = isHorizontalListScrollingX.value
       ? interpolate(
           horizontalListOffsetX.value / windowWidth,
-          Object.keys(tabOffsets.value).map(Number),
+          Object.keys(tabOffsets.value).map(Number), // map the tab offsets keys  to an array
           tabOffsets.value
         )
       : withTiming(tabOffsets.value[activeTabIndex.value], {
           duration: sharedConfigs.indicatorOnPressAnimDuration,
         });
 
+        // determine the "width" of the indicator based on whether the horizontal list is scrolling
     const width = isHorizontalListScrollingX.value
       ? interpolate(
           horizontalListOffsetX.value / windowWidth,
@@ -75,5 +72,3 @@ export const TabIndicator: FC<Props> = ({
     />
   );
 };
-
-

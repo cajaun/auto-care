@@ -1,6 +1,9 @@
 import { View, Text, ScrollView, FlatList, Pressable } from "react-native";
 import React from "react";
-import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
+import {
+  SafeAreaView,
+  useSafeAreaInsets,
+} from "react-native-safe-area-context";
 import { router, useLocalSearchParams } from "expo-router";
 import { Image } from "expo-image";
 import { SymbolView } from "expo-symbols";
@@ -9,17 +12,22 @@ import { popularCars } from "@/util/popular-cars";
 import TouchableBounce from "@/components/ui/touchable-bounce";
 
 const RentDetails = () => {
-  const { id, name} = useLocalSearchParams();
+  const { id, name } = useLocalSearchParams();
   const paddingBottom = useBottomTabOverflow();
-  const {top} = useSafeAreaInsets();
+  const { top } = useSafeAreaInsets();
 
-  const bookingHandler = (itemId: string, itemName: string, itemImage?: string) => {
-    router.push(`/(root)/(details)/(rent)/(booking)/${itemId}?name=${itemName}&image=${itemImage}`);
+  const bookingHandler = (
+    itemId: string,
+    itemName: string,
+    itemImage?: string
+  ) => {
+    router.push(
+      `/(root)/(details)/(rent)/(booking)/${itemId}?name=${itemName}&image=${itemImage}`
+    );
   };
 
-
   return (
-    <View style={{paddingTop: top}} className = "bg-white">
+    <View style={{ paddingTop: top }} className="bg-white">
       <ScrollView>
         <View className="flex-row justify-between items-center px-4">
           <Pressable onPress={() => router.back()}>
@@ -27,7 +35,7 @@ const RentDetails = () => {
           </Pressable>
 
           <View>
-            <Text className="text-2xl font-semibold text-dark-90">{name}</Text>
+            <Text className="text-xl font-semibold text-dark-90">{name}</Text>
           </View>
 
           <View>
@@ -45,7 +53,7 @@ const RentDetails = () => {
 
         <View className=" flex-row justify-between  items-center p-4">
           <Text className="font-bold text-xl text-dark-90">Popular Cars</Text>
-            <Text className = "text-dark-50">See all</Text>
+          <Text className="text-dark-50">See all</Text>
         </View>
 
         <View className="px-4">
@@ -56,7 +64,12 @@ const RentDetails = () => {
             keyExtractor={(item, index) => index.toString()}
             numColumns={2}
             renderItem={({ item }) => (
-              <TouchableBounce style={{ width: "48%" }} onPress={() => bookingHandler(item.id.toString(), item.name, item.image)}>
+              <TouchableBounce
+                style={{ width: "48%" }}
+                onPress={() =>
+                  bookingHandler(item.id.toString(), item.name, item.image)
+                }
+              >
                 <View className="bg-dark-90/5 p-2 rounded-xl ">
                   <View style={{ width: "100%", height: 120 }}>
                     <Image
@@ -71,7 +84,7 @@ const RentDetails = () => {
                     />
                   </View>
                   <View className="px-2">
-                    <Text className="text-xl font-semibold mt-2">2023</Text>
+                    <Text className="text-xl font-semibold mt-2">2023 Volvo C40</Text>
 
                     <View className="flex-row items-center">
                       <SymbolView
@@ -83,8 +96,11 @@ const RentDetails = () => {
                     </View>
 
                     <View className="flex-row justify-between items-center ">
-                      <Text className="mt-2 font-bold text-dark-90 text-2xl">
+                      <Text className="mt-2 font-bold text-dark-90 text-xl">
                         ${item.price}
+                        <Text className="text-xl">
+                          <Text className="text-xl text-dark-50 text-semibold">/D</Text>
+                        </Text>
                       </Text>
                       <View style={{ width: 30, height: 30 }}>
                         <Image

@@ -1,16 +1,19 @@
-import React, { useState } from "react";
-import { View, Text, TextInput, Pressable, Alert } from "react-native";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { auth } from "@/FirebaseConfig";
-import { PressableScale } from "../ui/pressable-scale";
-import { Facebook } from "@/assets/icons/facebook";
-import { Google } from "@/assets/icons/google";
-import { signupUser } from "@/services/auth-service";
-import { router } from "expo-router";
+import { View, Text, Pressable, TextInput } from "react-native";
+import React, { useEffect, useState } from "react";
+import { PressableScale } from "@/components/ui/pressable-scale";
+import {
+  SafeAreaView,
+  useSafeAreaInsets,
+} from "react-native-safe-area-context";
+import { Image } from "expo-image";
 import { SymbolView } from "expo-symbols";
-import { toast } from "sonner-native";
+import { router } from "expo-router";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { auth, db } from "@/FirebaseConfig";
+import { updateEmail } from "firebase/auth";
 
-const SignUpForm = () => {
+const EditScreen = () => {
+  const { top, bottom } = useSafeAreaInsets();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -19,44 +22,86 @@ const SignUpForm = () => {
   const [isPasswordFocused, setIsPasswordFocused] = useState(false);
   const [isUsernameFocused, setIsUsernameFocused] = useState(false);
 
-  const handleSignUp = async () => {
-    if (!email || !password || !username) {
-      toast.error("Please fill in all fields.", {
-        duration: 6000,
-        position: "bottom-center",
-      });
-      return;
-    }
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const user = auth.currentUser;
+      if (!user) return;
+  
+      setEmail(user.email ?? "");
+  
+      const userDoc = await getDoc(doc(db, "users", user.uid));
+      if (userDoc.exists()) {
+        const data = userDoc.data();
+        setUsername(data.username ?? "");
+      }
+    };
+  
+    fetchUserData();
+  }, []);
 
+  const updateProfile = async () => {
+    const user = auth.currentUser;
+    if (!user) return;
+  
     try {
-      await signupUser(email, password, username);
-
-      toast.success("Account created successfully!", {
-        duration: 6000,
-        position: "bottom-center",
+      let emailUpdated = false;
+ 
+      if (email !== user.email) {
+        await updateEmail(user, email); 
+        emailUpdated = true;
+      }
+  
+    
+      await updateDoc(doc(db, "users", user.uid), {
+        username: username,
+        email: emailUpdated ? email : user.email, 
       });
-
-      router.replace("/(root)/(tabs)/home");
-    } catch (error: any) {
-      toast.error("Unable to create account, please try again", {
-        duration: 6000,
-        position: "bottom-center",
-      });
+  
+      alert("Profile updated successfully!");
+    } catch (error) {
+      console.error("Update failed:", error);
+      alert("Failed to update profile.");
     }
   };
-  return (
-    <View className="w-full px-4">
-      <View className="flex justify-between">
-        <View className="w-full gap-y-3 py-8">
-          <Text className="text-3xl font-bold text-center text-dark-90">
-            Create an account
-          </Text>
-          <Text className="text-center text-dark-40">
-            Create your new account and find more service
-          </Text>
-        </View>
 
-        <View className="gap-y-5">
+  return (
+    <View className="flex-1 bg-white">
+    <View className="flex-1 ">
+      <View className="w-full bg-[#1A202F] relative " style={{ height: 244 }}>
+        <Image
+          source={require("@/assets/images/profile-background.png")}
+          style={{ width: "100%", height: "100%", position: "absolute" }}
+          contentFit="cover"
+        />
+
+        <SafeAreaView
+          className="flex-row justify-between items-center px-4 pt-4"
+          style={{ position: "absolute", top: 0, left: 0, right: 0 }}
+        >
+          <Pressable onPress={() => router.back()}>
+            <SymbolView name="arrow.left" tintColor={"#fff"} />
+          </Pressable>
+          <Text className="text-xl font-semibold text-white">
+            Edit Profile
+          </Text>
+          <View className="w-6" />
+        </SafeAreaView>
+      </View>
+
+      <View className="flex-row justify-center items-center px-6 -mt-[50px]">
+        <Image
+          source={{ uri: "https://picsum.photos/seed/696/3000/2000" }}
+          style={{
+            height: 100,
+            width: 100,
+            borderRadius: 50,
+          }}
+          contentFit="cover"
+        />
+      </View>
+
+      <View className="px-6 gap-y-3">
+   
           <View className="gap-y-2">
             <Text className="text-dark-90 font-medium">Username</Text>
             <View
@@ -125,42 +170,20 @@ const SignUpForm = () => {
                   </Pressable>
                 </View>
           </View>
-        </View>
 
-        <View className="mt-12">
-          <PressableScale
-            onPress={handleSignUp}
-            className="bg-accent h-[50px] flex flex-row gap-[6px] justify-center items-center px-5 mx-auto w-full rounded-2xl"
-          >
-            <Text className="text-white text-lg font-semibold">Sign up</Text>
-          </PressableScale>
-        </View>
-
-        <View className="py-4 mx-auto">
-          <Text className="font-bold text-lg">Or</Text>
-        </View>
-
-        <View className="flex-row gap-x-4">
-          <PressableScale className="flex-1 bg-white rounded-xl h-[50px] items-center justify-center px-2">
-            <Facebook width={24} height={24} />
-          </PressableScale>
-
-          <PressableScale className="flex-1 bg-white rounded-xl h-[50px] items-center justify-center px-2">
-            <Google width={24} height={24} />
-          </PressableScale>
-        </View>
-
-        <View className="text-center flex-row justify-center items-center gap-1 mt-4">
-          <Text className="text-dark-40 text-center">
-            Already Have an Account?
-          </Text>
-          <Pressable>
-            <Text className="text-center text-accent font-medium">Sign In</Text>
-          </Pressable>
-        </View>
       </View>
+      </View>
+      <View style={{ paddingBottom: bottom}} className = "px-6">
+        <PressableScale
+        onPress={() => updateProfile()}
+          className="bg-accent h-[50px] flex flex-row gap-[6px] justify-center items-center px-5 mx-auto w-full rounded-xl"
+        >
+          <Text className="text-white text-lg font-semibold">Save</Text>
+        </PressableScale>
+      </View>
+
     </View>
   );
 };
 
-export default SignUpForm;
+export default EditScreen;

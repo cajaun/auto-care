@@ -1,8 +1,14 @@
 import React, { FC } from "react";
-import { Dimensions, LayoutChangeEvent, Pressable, useWindowDimensions } from "react-native";
-import Animated, { interpolateColor, SharedValue, useAnimatedStyle } from "react-native-reanimated";
-
-
+import {
+  Dimensions,
+  LayoutChangeEvent,
+  Pressable,
+} from "react-native";
+import Animated, {
+  interpolateColor,
+  SharedValue,
+  useAnimatedStyle,
+} from "react-native-reanimated";
 
 const _defaultColor = "#a3a3a3";
 const _activeColor = "#171717";
@@ -26,13 +32,11 @@ export const TabItem: FC<TabItemProps> = ({
   onPressOut,
   onLayout,
 }) => {
-  
-
   const rTextStyle = useAnimatedStyle(() => {
     return {
       color: interpolateColor(
-        horizontalListOffsetX.value / _homePostsListWidth,
-        [index - 1, index, index + 1],
+        horizontalListOffsetX.value / _homePostsListWidth, // normalized scroll position
+        [index - 1, index, index + 1], // interpolation range for adjacent tabs
         [_defaultColor, _activeColor, _defaultColor]
       ),
     };
@@ -45,11 +49,9 @@ export const TabItem: FC<TabItemProps> = ({
       onPressOut={onPressOut}
       onLayout={onLayout}
     >
-      <Animated.Text style={rTextStyle} className="font-bold text-lg">
+      <Animated.Text style={rTextStyle} className="font-semibold text-lg">
         {label}
       </Animated.Text>
     </Pressable>
   );
 };
-
-

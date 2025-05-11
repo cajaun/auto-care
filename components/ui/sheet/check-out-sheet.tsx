@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, Pressable } from "react-native";
 import React, { useMemo, useState } from "react";
 import { Sheet, useSheetRef } from "./sheet";
 import DateTimePicker, {
@@ -8,10 +8,12 @@ import DateTimePicker, {
 } from "react-native-ui-datepicker";
 import { BottomSheetModal, BottomSheetView } from "@gorhom/bottom-sheet";
 
-import { PressableScale } from "./pressable-scale";
+import { PressableScale } from "../pressable-scale";
 import { router } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { SegmentedTabs } from "./segmented-tab";
+
+import { SymbolView } from "expo-symbols";
+import { toast } from "sonner-native";
 
 interface CheckOutSheetProps {
   bottomSheetModalRef: React.RefObject<BottomSheetModal>;
@@ -19,45 +21,51 @@ interface CheckOutSheetProps {
   name: string;
 }
 
-const CheckOutSheet = ({ bottomSheetModalRef, type, name }: CheckOutSheetProps) => {
-  const snapPoints = useMemo(() => ["70%"], []);;
-  const defaultStyles = useDefaultStyles();
-  const [selected, setSelected] = useState<DateType>();
-  const defaultClassNames = useDefaultClassNames();
-  const { top, bottom } = useSafeAreaInsets();
-  const tabItems = [
-    { key: "contacts", label: "Contacts" },
-    { key: "recent", label: "Recent" },
-  ];
+const CheckOutSheet = ({
+  bottomSheetModalRef,
+  type,
+  name,
+}: CheckOutSheetProps) => {
 
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [selected, setSelected] = useState<DateType>();
+
+  const { top, bottom } = useSafeAreaInsets();
+
+
+
   const checkoutHandler = () => {
+
+    if (!selected) {
+      toast.error("Please select a date before checking out", {
+        duration: 6000,
+        position: "top-center",
+      });
+      return;
+    }
     bottomSheetModalRef.current?.dismiss();
-    router.push(`/(root)/(payments)/(system)?date=${selected}&type=${type}&name=${name}`);
+    router.push(
+      `/(root)/(payments)/(system)?date=${selected}&type=${type}&name=${name}`
+    );
   };
 
   return (
     <Sheet
       ref={bottomSheetModalRef}
-      snapPoints={snapPoints}
-      enableDynamicSizing={false}
+      enableDynamicSizing={true}
     >
-      <BottomSheetView className="bg-white px-4  flex-1 justify-between">
-        <View>
-          <Text className="text-2xl text-dark-90 font-bold">Date & Time</Text>
+      <BottomSheetView className="bg-white px-4  flex-1 justify-between gap-y-4">
+        <View className = "flex-row justify-between items-center">
+          <Text className="text-xl text-dark-90 font-bold">Date & Time</Text>
+
+          <Pressable onPress={() =>     bottomSheetModalRef.current?.dismiss()}>
+            <SymbolView name = "xmark.circle" size={30} tintColor={"black"} />
+          </Pressable>
         </View>
 
-        <View>
-        <SegmentedTabs
-            tabs={tabItems}
-            activeIndex={activeIndex}
-            setActiveIndex={setActiveIndex}
-          />
-     
-        </View>
+
 
         <View className="w-full">
-          {activeIndex === 0 ? (
+
             <DateTimePicker
               mode="single"
               date={selected}
@@ -66,9 +74,10 @@ const CheckOutSheet = ({ bottomSheetModalRef, type, name }: CheckOutSheetProps) 
               classNames={{
                 ...useDefaultClassNames(),
                 day_label: "",
-                month_selector_label: "text-2xl font-bold",
-                year_selector_label: "text-2xl text-dark-90/50 font-bold",
-                button_next: "text-red-500 fill-[#FF]",
+                month_selector_label: "text-xl font-bold",
+                year_selector_label: "text-xl text-dark-90/50 font-bold",
+                button_next: "",
+                button_next_image: "",
                 selected: "bg-accent text-white rounded-full ",
                 selected_label: "text-white",
                 outside: "text-dark-90/50",
@@ -77,22 +86,13 @@ const CheckOutSheet = ({ bottomSheetModalRef, type, name }: CheckOutSheetProps) 
                 today_label: "",
               }}
             />
-          ) : (
-            <DateTimePicker
-              mode="single"
-              timePicker={true}
-              date={selected}
-              onChange={({ date }) => setSelected(date)}
-              styles={defaultStyles}
-              initialView="time"
-            />
-          )}
+
         </View>
 
         <View style={{ paddingBottom: bottom }}>
           <PressableScale
             onPress={() => checkoutHandler()}
-            className="bg-accent h-[50px] flex flex-row gap-[6px] justify-center items-center px-5 mx-auto w-full rounded-2xl"
+            className="bg-accent h-[50px] flex flex-row gap-[6px] justify-center items-center px-5 mx-auto w-full rounded-xl"
           >
             <Text className="text-white text-lg font-semibold">Checkout</Text>
           </PressableScale>

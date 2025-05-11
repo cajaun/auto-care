@@ -10,16 +10,15 @@ import { TabItem } from "./tab-item";
 import { Tab } from "./types";
 import * as Haptics from "expo-haptics";
 
-
 export const _homePostsListWidth = Dimensions.get("window").width;
 
 type Props = {
-  tabs: Tab[];
-  horizontalListRef: RefObject<FlatList>;
-  horizontalListOffsetX: SharedValue<number>;
-  isHorizontalListScrollingX: SharedValue<boolean>;
-  activeTabIndex: SharedValue<number>;
-  prevActiveTabIndex: SharedValue<number>;
+  tabs: Tab[]; 
+  horizontalListRef: RefObject<FlatList>; // ref for controlling the horizontal FlatList
+  horizontalListOffsetX: SharedValue<number>; // shared value to track horizontal scroll position
+  isHorizontalListScrollingX: SharedValue<boolean>; // shared value to check if horizontal scroll is in progress
+  activeTabIndex: SharedValue<number>; // shared value to track the active tab index
+  prevActiveTabIndex: SharedValue<number>; // shared value to track the previous active tab index
 };
 
 export const TopTabs: FC<Props> = ({
@@ -37,6 +36,7 @@ export const TopTabs: FC<Props> = ({
 
   const tabsListOffsetX = useSharedValue(0);
 
+  // scroll handler for the tab list to update the scroll position
   const scrollHandler = useAnimatedScrollHandler({
     onScroll: (event) => {
       tabsListOffsetX.value = event.contentOffset.x;
@@ -44,7 +44,10 @@ export const TopTabs: FC<Props> = ({
   });
 
   const _renderItem = ({ item, index }: { item: Tab; index: number }) => (
-    <View className=" flex-1 items-center justify-center"  style={{ width: _homePostsListWidth / tabs.length }}>
+    <View
+      className=" flex-1 items-center justify-center"
+      style={{ width: _homePostsListWidth / tabs.length }}
+    >
       <TabItem
         index={index}
         label={item.label}
@@ -62,11 +65,14 @@ export const TopTabs: FC<Props> = ({
         onLayout={(event) => {
           const { width, x } = event.nativeEvent.layout;
 
+            // update the tabWidths shared value with the width of the current tab
           tabWidths.modify((value) => {
             "worklet";
             value[index] = width;
             return value;
           });
+
+           // update the tabOffsets shared value with the horizontal position of the current tab
           tabOffsets.modify((value) => {
             "worklet";
             value[index] = x + (_homePostsListWidth / tabs.length) * index;
@@ -78,7 +84,7 @@ export const TopTabs: FC<Props> = ({
   );
 
   return (
-    <View className = "">
+    <View className="border-b-[0.25px] border-dark-90/25">
       <TabIndicator
         activeTabIndex={activeTabIndex}
         tabBarOffsetX={tabsListOffsetX}
@@ -96,11 +102,8 @@ export const TopTabs: FC<Props> = ({
         showsHorizontalScrollIndicator={false}
         onScroll={scrollHandler}
         scrollEventThrottle={1000 / 60}
-
         bounces={false}
       />
     </View>
   );
 };
-
-

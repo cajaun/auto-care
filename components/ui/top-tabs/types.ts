@@ -1,8 +1,8 @@
 export enum TabValue {
-  Dashboard = 0,
-  Coins = 1,
-  NFTs = 2,
+  Services = 0,
+  Rentals = 1,
+  Sales = 2,
 
 }
 
-export type Tab = { label: string; value: TabValue; content: React.ReactNode };
+export type Tab = { label: string; value: TabValue; paymentType: string};

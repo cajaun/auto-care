@@ -11,6 +11,8 @@ import { useBottomTabOverflow } from "@/components/utils.tsx/body-scroll-view";
 import { getImageName } from "@/util/get-image-name";
 import { PressableScale } from "@/components/ui/pressable-scale";
 import { vehicleSales } from "@/util/vehicle-sales";
+import { useSheetRef } from "@/components/ui/sheet/sheet";
+import CheckOutSheet from "@/components/ui/sheet/check-out-sheet";
 
 const SellingDetails = () => {
   const { id, name } = useLocalSearchParams();
@@ -18,16 +20,25 @@ const SellingDetails = () => {
   const { top } = useSafeAreaInsets();
 
   const imageName = getImageName(vehicleSales, name as string);
+  const bottomSheetModalRef = useSheetRef();
+  const fixedName = Array.isArray(name) ? name[0] : name;
 
   return (
     <View style={{ flex: 1, paddingTop: top }} className="bg-white">
+
+<CheckOutSheet
+        bottomSheetModalRef={bottomSheetModalRef}
+        type={"sales"}
+        name={fixedName}
+      />
+
       <View className="flex-1 justify-between">
         <View>
           <View className="flex-row justify-between items-center px-4 mb-4">
             <Pressable onPress={() => router.back()}>
               <SymbolView name="arrow.left" tintColor={"#1A202F"} />
             </Pressable>
-            <Text className="text-2xl font-semibold text-dark-90">
+            <Text className="text-xl font-semibold text-dark-90">
               Parts Details
             </Text>
             <View className="w-6" />
@@ -62,11 +73,17 @@ const SellingDetails = () => {
           </View>
 
           <View className="gap-y-5">
-            <Text className="text-white text-2xl font-bold mb-1">{name}</Text>
+            <Text className="text-white text-xl font-bold mb-1">{name}</Text>
 
             <View className="flex-row items-center justify-between">
-              <Text className="text-white text-2xl font-bold">Description</Text>
+              <Text className="text-white text-xl font-bold">Description</Text>
+              <View className = "flex-row items-center">
+                <View>
+                <SymbolView name="star.fill" tintColor="#FFB23F" size={20} />
+                </View>
               <Text className="text-white ml-2 text-sm">4.9 Review</Text>
+              </View>
+           
             </View>
 
             <Text className="text-gray-300 text-sm mb-4">
@@ -75,7 +92,7 @@ const SellingDetails = () => {
             </Text>
 
             <View>
-              <PressableScale className="bg-accent h-[50px] flex flex-row gap-[6px] justify-center items-center px-5 mx-auto w-full rounded-2xl">
+              <PressableScale  onPress={() => bottomSheetModalRef.current?.present()} className="bg-accent h-[50px] flex flex-row gap-[6px] justify-center items-center px-5 mx-auto w-full rounded-xl">
                 <Text className="text-white text-lg font-semibold">
                   Buy now
                 </Text>

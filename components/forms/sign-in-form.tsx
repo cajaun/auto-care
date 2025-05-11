@@ -1,43 +1,52 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  Pressable,
-  Alert,
-} from "react-native";
+import { View, Text, TextInput, Pressable, Alert } from "react-native";
 import { PressableScale } from "../ui/pressable-scale";
 import { Facebook } from "@/assets/icons/facebook";
 import { Google } from "@/assets/icons/google";
-import { signInWithEmailAndPassword } from "firebase/auth";
 import { router } from "expo-router";
-import { auth } from "@/FirebaseConfig";
 import { loginUser } from "@/services/auth-service";
+import { SymbolView } from "expo-symbols";
+import { toast } from "sonner-native";
 
 const SignInForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const [showPassword, setShowPassword] = useState(false);
+  const [isEmailFocused, setIsEmailFocused] = useState(false);
+  const [isPasswordFocused, setIsPasswordFocused] = useState(false);
 
   const handleLogin = async () => {
     try {
-  
       if (!email || !password) {
-        Alert.alert("Error", "Please fill in both email and password.");
+
+        
+        toast.error("Please fill in both email and password.", {
+          duration: 6000,
+          position: "bottom-center",
+        });
         return;
       }
 
-    
       await loginUser(email, password);
 
-   
       router.replace("/(root)/(tabs)/home");
+
+      
+      toast.success("Successfully logged in!", {
+        duration: 6000,
+        position: "bottom-center",
+      });
+
     } catch (error) {
       console.error("Login error: ", error);
-      Alert.alert("Error", "Invalid credentials. Please try again.");
+
+      toast.error("Invalid credentials. Please try again.", {
+        duration: 6000,
+        position: "bottom-center",
+      });
+
     }
   };
-
 
   return (
     <View className="w-full px-4">
@@ -55,39 +64,66 @@ const SignInForm = () => {
           <View className="gap-y-5">
             <View className="gap-y-2">
               <Text className="text-dark-90 font-medium">Email</Text>
-              <TextInput
-                className="rounded-xl px-4 py-3 mt-2 h-[50px] bg-transparent border border-dark-5"
-                placeholder="Email"
-                keyboardType="email-address"
-                autoCapitalize="none"
-                autoComplete="email"
-                value={email}
-                onChangeText={setEmail}
-              />
+              
+              <View
+                className={` rounded-xl h-[50px] px-4 mt-2 border ${
+                  isEmailFocused ? "border-accent" : "border-dark-5"
+                }`}
+              >
+                <TextInput
+                  className="flex-1 text-base"
+                  placeholder="john@gmail.com"
+                  keyboardType="email-address"
+                  autoCapitalize="none"
+                  autoComplete="email"
+                  value={email}
+                  onChangeText={setEmail}
+                  selectionColor={"#FF4040"}
+                  onFocus={() => setIsEmailFocused(true)}
+                  onBlur={() => setIsEmailFocused(false)}
+                />
+              </View>
             </View>
 
             <View className="gap-y-3">
               <View className="gap-y-2">
                 <Text className="text-dark-90 font-medium">Password</Text>
-                <TextInput
-                  className="rounded-xl px-4 py-3 mt-2 h-[50px] bg-transparent border border-dark-5"
-                  placeholder="Password"
-                  secureTextEntry
-                  autoCapitalize="none"
-                  autoComplete="password"
-                  value={password}
-                  onChangeText={setPassword}
-                />
+
+                <View
+                  className={`flex-row items-center rounded-xl h-[50px] px-4 mt-2 border ${
+                    isPasswordFocused ? "border-accent" : "border-dark-5"
+                  }`}
+                >
+                  <TextInput
+                    className="flex-1 text-base"
+                    placeholder="••••••••"
+                    secureTextEntry={!showPassword}
+                    autoCapitalize="none"
+                    autoComplete="password"
+                    value={password}
+                    onChangeText={setPassword}
+                    selectionColor={"#FF4040"}
+                    onFocus={() => setIsPasswordFocused(true)}
+                    onBlur={() => setIsPasswordFocused(false)}
+                  />
+                  <Pressable onPress={() => setShowPassword(!showPassword)}>
+                    <SymbolView
+                      name={showPassword ? "eye.slash.fill" : "eye.fill"}
+                      tintColor={"#767982"}
+                    />
+                  </Pressable>
+                </View>
               </View>
 
               <View>
-                <Text className="text-accent font-medium">Forgot password?</Text>
+                <Text className="text-accent font-medium">
+                  Forgot password?
+                </Text>
               </View>
             </View>
           </View>
         </View>
 
-    
         <View className="mt-12">
           <PressableScale
             onPress={handleLogin}
@@ -102,8 +138,7 @@ const SignInForm = () => {
         </View>
 
         <View className="flex-row gap-x-4">
-
-          <PressableScale  className="flex-1 bg-white rounded-xl h-[50px] items-center justify-center px-2">
+          <PressableScale className="flex-1 bg-white rounded-xl h-[50px] items-center justify-center px-2">
             <View>
               <Facebook width={24} height={24} />
             </View>

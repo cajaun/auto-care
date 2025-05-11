@@ -44,6 +44,7 @@ const TabBarButton: React.FC<TabBarButtonProps> = ({
       : 0
   );
 
+    // animate on active state change or text width availability
   useEffect(() => {
     if (textWidth) {
       width.value = withTiming(active ? MAX_WIDTH : MIN_WIDTH, { duration: 300 });
@@ -85,7 +86,7 @@ const TabBarButton: React.FC<TabBarButtonProps> = ({
         <Animated.View style={[styles.innerBox, animatedBoxStyle]}>
           <View style={styles.symbolContainer}>
             <Animated.View style={[styles.symbolWrapper, animatedDefaultSymbolStyle]}>
-              <SymbolView name={defaultSymbol} type="palette" size={SYMBOL_SIZE} tintColor="#8999AB" />
+              <SymbolView name={defaultSymbol} type="palette" size={SYMBOL_SIZE} tintColor="#A3A6AC" />
             </Animated.View>
             <Animated.View style={[styles.symbolWrapper, animatedActiveSymbolStyle]}>
               <SymbolView name={activeSymbol} type="palette" size={SYMBOL_SIZE}   tintColor="white"/>

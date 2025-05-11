@@ -7,10 +7,16 @@ import { useRouter } from "expo-router";
 import { listItems } from "@/util/list-items";
 import { SymbolView } from "expo-symbols";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { getAuth } from "firebase/auth";
+import { PressableScale } from "@/components/ui/pressable-scale";
 
 const ProfileScreen = () => {
   const [isNotificationsOn, setIsNotificationsOn] = useState(true);
   const router = useRouter();
+  const auth = getAuth();
+  const user = auth.currentUser;
+
+  const username = user?.displayName;
 
   return (
     <View className="flex-1 bg-white">
@@ -28,9 +34,7 @@ const ProfileScreen = () => {
           <Pressable onPress={() => router.back()}>
             <SymbolView name="arrow.left" tintColor={"#fff"} />
           </Pressable>
-          <Text className="text-2xl font-semibold text-white">
-            Profile
-          </Text>
+          <Text className="text-xl font-semibold text-white">Profile</Text>
           <View className="w-6" />
         </SafeAreaView>
       </View>
@@ -47,8 +51,19 @@ const ProfileScreen = () => {
         />
       </View>
 
-      <View className="mt-4 px-6 gap-y-3">
-        <Text className="text-xl font-bold text-[#0C1A30]">Denuyel</Text>
+      <View className=" w-full justify-end items-end px-6">
+        <PressableScale
+          onPress={() => router.push("/(profile)/(edit)")}
+          className="bg-[#F7F7FB] h-[40px]  gap-[6px] justify-center items-center px-5 w-1/3 rounded-full border border-[#386DF3] flex-row"
+        >
+          <View >
+            <SymbolView name ="pencil.and.scribble" />
+          </View>
+          <Text className = "text-[#386DF3]">Edit profile</Text>
+        </PressableScale>
+      </View>
+      <View className="px-6 gap-y-3">
+        <Text className="text-xl font-bold text-[#0C1A30]">{username}</Text>
         <Text className="text-dark-90 mt-1 text-lg">
           2972 Westheimer Rd. Santa Ana,{"\n"}Illinois 85486
         </Text>

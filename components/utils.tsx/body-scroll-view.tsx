@@ -12,7 +12,7 @@ export function useBottomTabOverflow() {
   return tabHeight - bottom;
 }
 
-
+// custom scrollView that handles sizing of the screens 
 export const BodyScrollView = forwardRef<any, ScrollViewProps>((props, ref) => {
   const paddingBottom = useBottomTabOverflow();
   return (

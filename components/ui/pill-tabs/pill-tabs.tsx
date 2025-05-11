@@ -56,8 +56,11 @@ const PillTabs = ({
   const activeTabLayout = useSharedValue<TTabLayout>(initialTabLayout);
   const [layouts, setLayouts] = useState<TCurrentTabLayout>({});
 
+   // when a tab renders, record its layout
   const handleLayout = (id: string, event: any, index: number) => {
     const { width, height, x, y } = event.nativeEvent.layout;
+
+      // on initial render or if it's the active tab, sync shared value because yeah?
     if (id === activeTab || index === 0) {
       activeTabLayout.value = { width, height, x, y };
     }

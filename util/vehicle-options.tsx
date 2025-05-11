@@ -6,15 +6,29 @@ import TouchableBounce from "@/components/ui/touchable-bounce";
 import { vehicleServices } from "./vehicle-services";
 import { vehicleRentals } from "./vehicle-rentals";
 import { vehicleSales } from "./vehicle-sales";
-import { router } from "expo-router";
-
 
 export const vehicleOptionsRenderMap: Record<
   string,
-  ({ item, type, onPress }: { item: any; type: string; onPress: (itemId: string, itemName: string, type: string, itemImage?: string) => void }) => JSX.Element
+  ({
+    item,
+    type,
+    onPress,
+  }: {
+    item: any;
+    type: string;
+    onPress: (
+      itemId: string,
+      itemName: string,
+      type: string,
+      itemImage?: string
+    ) => void;
+  }) => JSX.Element
 > = {
   services: ({ item, type, onPress }) => (
-    <TouchableBounce style={{ width: "48%" }} onPress={() => onPress(item.id, item.name, type, item.image)}>
+    <TouchableBounce
+      style={{ width: "48%" }}
+      onPress={() => onPress(item.id, item.name, type, item.image)}
+    >
       <View
         className="rounded-lg overflow-hidden"
         style={{
@@ -29,10 +43,16 @@ export const vehicleOptionsRenderMap: Record<
           style={{ width: "100%", height: 120, borderRadius: 12 }}
           contentFit="cover"
         />
+
         {item.tag && (
           <View
-            className="absolute bottom-4"
-            style={{ width: 100, height: 30 }}
+            style={{
+              position: "absolute",
+              bottom: 4,
+              right: 80,
+              width: 100,
+              height: 30,
+            }}
           >
             <Image
               source={item.tag}
@@ -53,24 +73,41 @@ export const vehicleOptionsRenderMap: Record<
     </TouchableBounce>
   ),
 
-  rent: ({ item, type, onPress})  => (
-    <TouchableBounce style={{ width: "100%", height: 94 }} onPress={() => onPress(item.id, item.name, type)} >
+  rent: ({ item, type, onPress }) => (
+    <TouchableBounce
+      style={{ width: "100%", height: 94 }}
+      onPress={() => onPress(item.id, item.name, type)}
+    >
       <View
-        className="bg-white flex-row  justify-between items-center  rounded-2xl "
+        className="bg-white flex-row  justify-between items-center  rounded-xl "
         style={{ height: "100%", width: "100%", paddingHorizontal: 28 }}
       >
-        <View className = "flex-row" style={{gap: 28}}>
+        <View className="flex-row" style={{ gap: 28 }}>
+          <View>
+            {/* the Sf symbol for the car is facing the other way so transform */}
+            <SymbolView
+              name={item.icon}
+              tintColor="#000"
+              size={60}
+              style={{
+                transform:
+                  item.name.toLowerCase() === "car rent"
+                    ? [{ scaleX: -1 }]
+                    : [],
+              }}
+            />
+          </View>
 
-      
-        <View>
-          <SymbolView name={item.icon} tintColor="#000" size={60} />
-        </View>
+          <View className="  gap-y-2">
+            <Text className="text-xl font-semibold">{item.name} Service</Text>
 
-        <View className="  gap-y-2">
-          <Text className="text-2xl font-semibold">{item.name} Service</Text>
-
-          <Text className = "" style={{color: "#2AB749", fontWeight: "semibold"}}>Available</Text>
-        </View>
+            <Text
+              className=""
+              style={{ color: "#2AB749", fontWeight: "semibold" }}
+            >
+              Available
+            </Text>
+          </View>
         </View>
 
         <View style={{ width: 30, height: 30 }}>
@@ -84,10 +121,15 @@ export const vehicleOptionsRenderMap: Record<
     </TouchableBounce>
   ),
 
-  selling: ({ item, type, onPress})  => (
-    <TouchableBounce style={{ width: "48%" }} onPress={() => onPress(item.id, item.name, type, item.image)}>
-
-      <View className=" p-2 rounded-xl " style={{borderColor: "#E8E9EA",  borderWidth: 1,    }}>
+  selling: ({ item, type, onPress }) => (
+    <TouchableBounce
+      style={{ width: "48%" }}
+      onPress={() => onPress(item.id, item.name, type, item.image)}
+    >
+      <View
+        className=" p-2 rounded-xl "
+        style={{ borderColor: "#E8E9EA", borderWidth: 1 }}
+      >
         <View style={{ width: "100%", height: 120 }}>
           <Image
             className=""
@@ -104,7 +146,7 @@ export const vehicleOptionsRenderMap: Record<
 
           <Text className="text-xl font-semibold mt-2">{item.name}</Text>
           <View className="flex-row justify-between items-center ">
-            <Text className="mt-2 font-bold text-accent text-2xl">$240</Text>
+            <Text className="mt-2 font-bold text-accent text-xl">${item.price}</Text>
 
             <View>
               <SymbolView

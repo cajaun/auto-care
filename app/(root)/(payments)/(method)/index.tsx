@@ -12,15 +12,14 @@ import { handlePayment } from "@/services/payment-service";
 const MethodScreen = () => {
   const { top, bottom } = useSafeAreaInsets();
 
-  const { system, date, type, name} = useLocalSearchParams();
+  const { system, date, type, name } = useLocalSearchParams();
   const [selectedMethod, setSelectedMethod] = useState("");
 
   const onPaymentSubmit = () => {
-
     handlePayment({
-      type: Array.isArray(type) ? type[0] : type, 
-      name: Array.isArray(name) ? name[0] : name, 
-      date: Array.isArray(date) ? date[0] : date, 
+      type: Array.isArray(type) ? type[0] : type,
+      name: Array.isArray(name) ? name[0] : name,
+      date: Array.isArray(date) ? date[0] : date,
       selectedMethod: selectedMethod,
     });
   };
@@ -33,14 +32,14 @@ const MethodScreen = () => {
             <Pressable onPress={() => router.back()}>
               <SymbolView name="arrow.left" tintColor={"#1A202F"} />
             </Pressable>
-            <Text className="text-2xl font-semibold text-dark-90">Payment</Text>
+            <Text className="text-xl font-semibold text-dark-90">Payment</Text>
             <View className="w-6" />
           </View>
         </View>
 
         <View className="gap-y-4">
           <View>
-            <Text className="text-2xl font-semibold">
+            <Text className="text-xl font-semibold">
               Your current location
             </Text>
           </View>
@@ -65,7 +64,7 @@ const MethodScreen = () => {
 
         <View className="gap-y-4">
           <View>
-            <Text className="text-2xl font-semibold">Payment Method</Text>
+            <Text className="text-xl font-semibold">Payment Method</Text>
           </View>
 
           <Pressable
@@ -145,7 +144,7 @@ const MethodScreen = () => {
 
         <View className="flex-row justify-between">
           <View>
-            <Text className="text-2xl font-semibold">Total Amount</Text>
+            <Text className="text-xl font-semibold">Total Amount</Text>
           </View>
 
           <View>
@@ -155,7 +154,10 @@ const MethodScreen = () => {
       </View>
 
       <View style={{ paddingBottom: bottom }}>
-        <PressableScale onPress={ () => onPaymentSubmit()}className="bg-accent h-[50px] flex flex-row gap-[6px] justify-center items-center px-5 mx-auto w-full rounded-2xl">
+        <PressableScale
+          onPress={() => onPaymentSubmit()}
+          className="bg-accent h-[50px] flex flex-row gap-[6px] justify-center items-center px-5 mx-auto w-full rounded-xl"
+        >
           <Text className="text-white text-lg font-semibold">Pay now</Text>
         </PressableScale>
       </View>

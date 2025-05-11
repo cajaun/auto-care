@@ -2,7 +2,7 @@ import { View, Text, StatusBar, useColorScheme } from "react-native";
 import React from "react";
 import { Stack } from "expo-router";
 
-const ProfileLayout = () => {
+const EditLayout = () => {
   const colorScheme = useColorScheme();
   return (
     <Stack>
@@ -12,4 +12,4 @@ const ProfileLayout = () => {
   );
 };
 
-export default ProfileLayout;
+export default EditLayout;
