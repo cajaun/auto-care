@@ -1,9 +1,0 @@
-<resources>
-  <string name="app_name">auto-care-components</string>
-  <string name="expo_system_ui_user_interface_style" translatable="false">automatic</string>
-  <string name="expo_splash_screen_resize_mode" translatable="false">contain</string>
-  <string name="expo_splash_screen_status_bar_translucent" translatable="false">false</string>
-  <string name="facebook_app_id">1593662091301767</string>
-  <string name="facebook_client_token">13669dd4245faba2155082fe3af781fd</string>
-  <string name="fb_login_protocol_scheme">fb1593662091301767</string>
-</resources>

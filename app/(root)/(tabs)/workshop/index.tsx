@@ -6,7 +6,7 @@ import MapView from 'react-native-maps';
 const WorkShopScreen = () => {
   return (
     <View style={styles.container}>
-      <MapView style={styles.map} />
+
     </View>
   )
 }

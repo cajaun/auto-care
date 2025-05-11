@@ -19,7 +19,11 @@ const RootLayout = () => {
     <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
     <Stack.Screen name="(details)/(services)/[id]" options={{ headerShown: false }} />
     <Stack.Screen name="(details)/(rent)/[id]" options={{ headerShown: false }} />
+    <Stack.Screen name="(details)/(rent)/(booking)" options={{ headerShown: false }} />
     <Stack.Screen name="(details)/(selling)/[id]" options={{ headerShown: false }} />
+    <Stack.Screen name="(payments)/(system)" options={{ headerShown: false }} />
+    <Stack.Screen name="(payments)/(confirm)" options={{ headerShown: false }} />
+    <Stack.Screen name="(payments)/(method)" options={{ headerShown: false }} />
     <Stack.Screen name="(profile)" options={{ headerShown: false }} />
     </Stack>
   )

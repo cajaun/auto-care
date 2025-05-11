@@ -9,13 +9,17 @@ import { popularCars } from "@/util/popular-cars";
 import TouchableBounce from "@/components/ui/touchable-bounce";
 
 const RentDetails = () => {
-  const { id, name } = useLocalSearchParams();
+  const { id, name} = useLocalSearchParams();
   const paddingBottom = useBottomTabOverflow();
   const {top} = useSafeAreaInsets();
 
+  const bookingHandler = (itemId: string, itemName: string, itemImage?: string) => {
+    router.push(`/(root)/(details)/(rent)/(booking)/${itemId}?name=${itemName}&image=${itemImage}`);
+  };
+
 
   return (
-    <View style={{paddingTop: top}}>
+    <View style={{paddingTop: top}} className = "bg-white">
       <ScrollView>
         <View className="flex-row justify-between items-center px-4">
           <Pressable onPress={() => router.back()}>
@@ -52,7 +56,7 @@ const RentDetails = () => {
             keyExtractor={(item, index) => index.toString()}
             numColumns={2}
             renderItem={({ item }) => (
-              <TouchableBounce style={{ width: "48%" }}>
+              <TouchableBounce style={{ width: "48%" }} onPress={() => bookingHandler(item.id.toString(), item.name, item.image)}>
                 <View className="bg-dark-90/5 p-2 rounded-xl ">
                   <View style={{ width: "100%", height: 120 }}>
                     <Image

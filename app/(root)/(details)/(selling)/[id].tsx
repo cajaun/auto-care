@@ -34,7 +34,7 @@ const SellingDetails = () => {
           </View>
         </View>
 
-        <View className = "gap-y-6">
+        <View className="gap-y-6">
           <View className="items-center justify-center h-64">
             <Image
               source={imageName}
@@ -53,16 +53,14 @@ const SellingDetails = () => {
         </View>
 
         <View className="bg-dark-90 px-6 py-16 rounded-t-3xl relative">
-        <View
-  className="absolute -top-6 bg-white px-6 py-4 rounded-full border border-gray-200 shadow-md flex-row justify-between items-center gap-x-12"
-  style={{ left: '50%', transform: [{ translateX: -60 }] }} 
->
-  <Text className="text-lg font-semibold text-gray-800">Price</Text>
-  <Text className="text-lg font-semibold text-gray-800">$120</Text>
-</View>
+          <View
+            className="absolute -top-6 bg-white px-6 py-4 rounded-full border border-gray-200 shadow-md flex-row justify-between items-center gap-x-12"
+            style={{ left: "50%", transform: [{ translateX: -60 }] }}
+          >
+            <Text className="text-lg font-semibold text-gray-800">Price</Text>
+            <Text className="text-lg font-semibold text-gray-800">$120</Text>
+          </View>
 
-
-      
           <View className="gap-y-5">
             <Text className="text-white text-2xl font-bold mb-1">{name}</Text>
 

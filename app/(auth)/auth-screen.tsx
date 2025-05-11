@@ -1,33 +1,35 @@
-import React, { useState } from 'react';
-import { View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { SegmentedControl } from '@/components/ui/segmented-tab';
-import SignInForm from '@/components/forms/sign-in-form';
-import SignUpForm from '@/components/forms/sign-up-form';
-import { Stack } from 'expo-router';
+import React, { act, useState } from "react";
+import { View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { SegmentedTabs } from "@/components/ui/segmented-tab";
+import SignInForm from "@/components/forms/sign-in-form";
+import SignUpForm from "@/components/forms/sign-up-form";
+import { Stack } from "expo-router";
 
 const AuthScreen = () => {
-  const [selectedIndex, setSelectedIndex] = useState(0); 
+  const tabItems = [
+    { key: "contacts", label: "Contacts" },
+    { key: "recent", label: "Recent" },
+  ];
+
+  const [activeIndex, setActiveIndex] = useState(0);
 
   return (
-    <View className = "flex-1">
+    <View className="flex-1">
+      <SafeAreaView className="w-full h-full">
+        <View className="bg-dark-5 px-4">
+          <SegmentedTabs
+            tabs={tabItems}
+            activeIndex={activeIndex}
+            setActiveIndex={setActiveIndex}
+          />
+        </View>
 
-    <SafeAreaView className="w-full h-full">
-
-      <View className = "bg-dark-5 px-4">
-      <SegmentedControl
-        values={['Login', 'Sign up']}
-        selectedIndex={selectedIndex}
-        onChange={setSelectedIndex}
-      />
-      </View>
-
-
-      <View className="w-full">
-        {selectedIndex === 0 ? <SignInForm/> : <SignUpForm/>}
-      </View>
-    </SafeAreaView>
-  </View>
+        <View className="w-full">
+          {activeIndex === 0 ? <SignInForm /> : <SignUpForm />}
+        </View>
+      </SafeAreaView>
+    </View>
   );
 };
 

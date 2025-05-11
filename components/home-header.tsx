@@ -3,8 +3,8 @@ import React from 'react'
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
 import { SymbolView } from 'expo-symbols'
 import { Image } from 'expo-image'
-import PillTabs from './ui/top-tabs/pillTabs'
-import { pillTabsStyles } from './ui/top-tabs/pill-tabs-styles'
+import PillTabs from '@/components/ui/pill-tabs/pill-tabs'
+import { pillTabsStyles } from '@/components/ui/pill-tabs/pill-tabs-styles'
 import { tabs } from '@/util/tabs'
 
 
